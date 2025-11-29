@@ -1,0 +1,69 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, curl, zip, gd, mysqli, pdo, pdo_mysql
+      
+      - name: Install dependencies
+        run: |
+          if [ -f composer.json ]; then
+            composer install --no-dev --optimize-autoloader
+          fi
+      
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: bygizembutik.com
+          username: developer@bygizembutik.com
+          password: uqurcan0302
+          local-dir: ./
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.github/**
+            **/.vscode/**
+            **/.idea/**
+            **/writable/logs/**
+            **/writable/cache/**
+            **/writable/debugbar/**
+            **/writable/session/**
+            **/writable/uploads/**
+            **/.env
+            **/.env.*
+            **/composer.lock
+            **/package-lock.json
+            **/yarn.lock
+            **/.DS_Store
+            **/Thumbs.db
+      
+      - name: Set permissions
+        uses: appleboy/ssh-action@master
+        with:
+          host: bygizembutik.com
+          username: developer@bygizembutik.com
+          password: uqurcan0302
+          script: |
+            chmod -R 755 writable
+            chmod -R 755 uploads
+            chown -R www-data:www-data writable
+            chown -R www-data:www-data uploads
+
