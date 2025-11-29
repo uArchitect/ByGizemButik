@@ -42,11 +42,11 @@ jobs:
             **/.github/**
             **/.vscode/**
             **/.idea/**
-            **/writable/logs/**
-            **/writable/cache/**
-            **/writable/debugbar/**
-            **/writable/session/**
-            **/writable/uploads/**
+            **/writable/**
+            **/uploads/**
+            **/system/**
+            **/app/ThirdParty/**
+            **/install/**
             **/.env
             **/.env.*
             **/composer.lock
@@ -54,6 +54,18 @@ jobs:
             **/yarn.lock
             **/.DS_Store
             **/Thumbs.db
+            **/*.zip
+            **/*.log
+            **/tests/**
+            **/test/**
+            **/*.md
+            **/README*
+            **/LICENSE*
+            **/CHANGELOG*
+            **/phpunit.xml
+            **/.phpunit.result.cache
+            **/vendor/**
+            **/composer.phar
       
       - name: Set permissions
         uses: appleboy/ssh-action@master
