@@ -35,6 +35,8 @@ jobs:
           password: uqurcan0302
           local-dir: ./
           server-dir: /
+          log-level: minimal
+          dangerous-clean-slate: false
           exclude: |
             **/.git*
             **/.git*/**
@@ -66,16 +68,14 @@ jobs:
             **/.phpunit.result.cache
             **/vendor/**
             **/composer.phar
-      
-      - name: Set permissions
-        uses: appleboy/ssh-action@master
-        with:
-          host: bygizembutik.com
-          username: developer@bygizembutik.com
-          password: uqurcan0302
-          script: |
-            chmod -R 755 writable
-            chmod -R 755 uploads
-            chown -R www-data:www-data writable
-            chown -R www-data:www-data uploads
+            **/app/Database/Migrations/**
+            **/app/Database/Seeds/**
+            **/app/Views.zip
+            **/uploads.zip
+            **/app/Helpers/index.html
+            **/app/Controllers/index.html
+            **/app/Models/*.html
+            **/assets/file/**
+            **/assets/vendor/**
+            **/assets/admin/vendor/**
 
