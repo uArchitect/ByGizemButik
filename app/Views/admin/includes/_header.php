@@ -185,10 +185,11 @@
                 </div>
             </div>
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">Navigasyon</li>
                 <li class="nav-home">
                     <a href="<?= adminUrl(); ?>"><i class="fa fa-home"></i> <span>Ana Sayfa</span></a>
                 </li>
+                
+                <li class="header">Tasarım</li>
                 <?php if (hasPermission('theme')): ?>
                     <li class="nav-theme">
                         <a href="<?= adminUrl('theme'); ?>"><i class="fa fa-th"></i><span>Tema</span></a>
@@ -203,15 +204,15 @@
                     <li class="nav-homepage-manager">
                         <a href="<?= adminUrl('homepage-manager'); ?>"><i class="fa fa-clone"></i><span>Ana Sayfa Yöneticisi</span></a>
                     </li>
-                <?php endif;
-                if (hasPermission('orders')):?>
-                    <li class="header">Siparişler</li>
-                    <li class="treeview<?php isAdminNavActive(['orders', 'transactions', 'order-details']); ?>">
-                        <a href="#"><i class="fa fa-shopping-cart"></i><span>Siparişler</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="nav-orders"><a href="<?= adminUrl('orders'); ?>"> Siparişler</a></li>
-                            <li class="nav-transactions"><a href="<?= adminUrl('transactions'); ?>"> İşlemler</a></li>
-                        </ul>
+                <?php endif; ?>
+                
+                <li class="header">Siparişler & Satışlar</li>
+                <?php if (hasPermission('orders')):?>
+                    <li class="nav-orders">
+                        <a href="<?= adminUrl('orders'); ?>"><i class="fa fa-shopping-cart"></i><span>Siparişler</span></a>
+                    </li>
+                    <li class="nav-transactions">
+                        <a href="<?= adminUrl('transactions'); ?>"><i class="fa fa-exchange"></i><span>İşlemler</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('digital_sales')):?>
@@ -223,136 +224,110 @@
                     <li class="nav-refund-requests">
                         <a href="<?= adminUrl('refund-requests'); ?>"><i class="fa fa-flag"></i><span>İade Talepleri</span></a>
                     </li>
-                <?php endif;
-                if (hasPermission('products')):?>
-                    <li class="header">Ürünler</li>
-                    <li class="treeview<?php isAdminNavActive(['products']); ?>">
-                        <a href="#"><i class="fa fa-shopping-basket angle-left" aria-hidden="true"></i><span>Ürünler</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="<?= inputGet('list') == 'all' || empty(inputGet('list')) ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=all'); ?>"> Ürünler</a></li>
-                            <li class="<?= inputGet('list') == 'special' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=special'); ?>"> Özel Teklifler</a></li>
-                            <?php if (!empty($generalSettings->approve_after_editing)): ?>
-                                <li class="<?= inputGet('list') == 'edited' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=edited'); ?>"> Düzenlenen Ürünler</a></li>
-                            <?php endif; ?>
-                            <li class="<?= inputGet('list') == 'pending' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=pending'); ?>"> Bekleyen Ürünler</a></li>
-                            <li class="<?= inputGet('list') == 'hidden' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=hidden'); ?>"> Gizli Ürünler</a></li>
-                            <?php if ($generalSettings->membership_plans_system == 1): ?>
-                                <li class="<?= inputGet('list') == 'expired' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=expired'); ?>"> Süresi Dolmuş Ürünler</a></li>
-                            <?php endif; ?>
-                            <li class="<?= inputGet('list') == 'sold' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=sold'); ?>"> Satılan Ürünler</a></li>
-                            <li class="<?= inputGet('list') == 'drafts' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=drafts'); ?>"> Taslaklar</a></li>
-                            <li class="<?= inputGet('list') == 'deleted' ? 'active' : ''; ?>"><a href="<?= adminUrl('products?list=deleted'); ?>"> Silinen Ürünler</a></li>
-                            <li><a href="<?= generateDashUrl('add_product'); ?>" target="_blank"> Ürün Ekle</a></li>
-                            <li><a href="<?= generateDashUrl('bulk_product_upload'); ?>"> Toplu Ürün Yükleme</a></li>
-                        </ul>
-                    </li>
-                <?php endif;
-                if (hasPermission('featured_products')):?>
-                    <li class="treeview<?php isAdminNavActive(['featured-products', 'featured-products-pricing', 'featured-products-transactions']); ?>">
-                        <a href="#"><i class="fa fa-dollar" aria-hidden="true"></i><span>Öne Çıkan Ürünler</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="nav-featured-products"><a href="<?= adminUrl('featured-products'); ?>"> Ürünler</a></li>
-                            <li class="nav-featured-products-pricing"><a href="<?= adminUrl('featured-products-pricing'); ?>"> Fiyatlandırma</a></li>
-                        </ul>
-                    </li>
-                <?php endif;
-                if (hasPermission('quote_requests')):?>
-                    <li class="nav-quote-requests">
-                        <a href="<?= adminUrl('quote-requests'); ?>"><i class="fa fa-tag"></i> <span>Teklif Talepleri</span></a>
+                <?php endif; ?>
+                
+                <li class="header">Ürünler & Kategoriler</li>
+                <?php if (hasPermission('products')):?>
+                    <li class="nav-products">
+                        <a href="<?= adminUrl('products?list=all'); ?>"><i class="fa fa-shopping-basket"></i><span>Ürünler</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('categories')):?>
                     <li class="nav-categories">
-                        <a href="<?= adminUrl('categories'); ?>"><i class="fa fa-folder-open"></i> <span>Kategoriler</span></a>
+                        <a href="<?= adminUrl('categories'); ?>"><i class="fa fa-folder-open"></i><span>Kategoriler</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('brands')):?>
                     <li class="nav-brands">
-                        <a href="<?= adminUrl('brands'); ?>"><i class="fa fa-asterisk"></i> <span>Markalar</span></a>
+                        <a href="<?= adminUrl('brands'); ?>"><i class="fa fa-asterisk"></i><span>Markalar</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('custom_fields')):?>
                     <li class="nav-custom-fields">
-                        <a href="<?= adminUrl('custom-fields'); ?>"><i class="fa fa-plus-square-o"></i> <span>Özel Alanlar</span></a>
+                        <a href="<?= adminUrl('custom-fields'); ?>"><i class="fa fa-plus-square-o"></i><span>Özel Alanlar</span></a>
                     </li>
                 <?php endif;
-                // Ödeme bölümü kaldırıldı
-                if (hasPermission('earnings')):?>
-                    <li class="treeview<?php isAdminNavActive(['earnings', 'seller-balances', 'update-seller-balance']); ?>">
-                        <a href="#"><i class="fa fa-money" aria-hidden="true"></i><span>Kazançlar</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="nav-earnings"><a href="<?= adminUrl('earnings'); ?>"> Kazançlar</a></li>
-                            <li class="nav-seller-balances"><a href="<?= adminUrl('seller-balances'); ?>"> Satıcı Bakiyeleri</a></li>
-                        </ul>
+                if (hasPermission('quote_requests')):?>
+                    <li class="nav-quote-requests">
+                        <a href="<?= adminUrl('quote-requests'); ?>"><i class="fa fa-tag"></i><span>Teklif Talepleri</span></a>
+                    </li>
+                <?php endif; ?>
+                
+                <li class="header">Finansal İşlemler</li>
+                <?php if (hasPermission('earnings')):?>
+                    <li class="nav-earnings">
+                        <a href="<?= adminUrl('earnings'); ?>"><i class="fa fa-money"></i><span>Kazançlar</span></a>
+                    </li>
+                    <li class="nav-seller-balances">
+                        <a href="<?= adminUrl('seller-balances'); ?>"><i class="fa fa-wallet"></i><span>Satıcı Bakiyeleri</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('payouts')):?>
-                    <li class="treeview<?php isAdminNavActive(['add-payout', 'payout-requests', 'completed-payouts', 'payout-settings']); ?>">
-                        <a href="#"><i class="fa fa-usd" aria-hidden="true"></i><span>Ödemeler</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="nav-add-payout"><a href="<?= adminUrl('add-payout'); ?>"> Ödeme Ekle</a></li>
-                            <li class="nav-payout-requests"><a href="<?= adminUrl('payout-requests'); ?>"> Ödeme Talepleri</a></li>
-                            <li class="nav-payout-settings"><a href="<?= adminUrl('payout-settings'); ?>"> Ödeme Ayarları</a></li>
-                        </ul>
+                    <li class="nav-payout-requests">
+                        <a href="<?= adminUrl('payout-requests'); ?>"><i class="fa fa-usd"></i><span>Ödeme Talepleri</span></a>
+                    </li>
+                <?php endif; ?>
+                
+                <li class="header">İçerik</li>
+                <?php if (hasPermission('pages')): ?>
+                    <li class="nav-pages">
+                        <a href="<?= adminUrl('pages'); ?>"><i class="fa fa-file"></i><span>Sayfalar</span></a>
                     </li>
                 <?php endif;
-                if (hasPermission('pages') || hasPermission('blog') || hasPermission('location')):?>
-                    <li class="header">İçerik</li>
-                    <?php if (hasPermission('pages')): ?>
-                        <li class="nav-pages">
-                            <a href="<?= adminUrl('pages'); ?>"><i class="fa fa-file"></i><span>Sayfalar</span></a>
-                        </li>
-                    <?php endif;
-                    if (hasPermission('blog')):?>
-                        <li class="treeview<?php isAdminNavActive(['blog-add-post', 'blog-posts', 'blog-categories', 'edit-blog-post', 'edit-blog-category']); ?>">
-                            <a href="#"><i class="fa fa-file-text"></i><span>Blog</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                            <ul class="treeview-menu">
-                                <li class="nav-blog-posts"><a href="<?= adminUrl('blog-posts'); ?>"> Yazılar</a></li>
-                                <li class="nav-blog-categories"><a href="<?= adminUrl('blog-categories'); ?>"> Kategoriler</a></li>
-                            </ul>
-                        </li>
-                    <?php endif;
-                    if (hasPermission('location')):?>
-                        <li class="treeview<?php isAdminNavActive(['countries', 'states', 'cities', 'add-country', 'add-state', 'add-city', 'update-country', 'update-state', 'update-city']); ?>">
-                            <a href="#"><i class="fa fa-map-marker"></i><span>Konum</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                            <ul class="treeview-menu">
-                                <li class="nav-countries"><a href="<?= adminUrl('countries'); ?>"> Ülkeler</a></li>
-                                <li class="nav-states"><a href="<?= adminUrl('states'); ?>"> Eyaletler</a></li>
-                                <li class="nav-cities"><a href="<?= adminUrl('cities'); ?>"> Şehirler</a></li>
-                            </ul>
-                        </li>
-                    <?php endif;
-                endif;
-                if (hasPermission('membership')):?>
-                    <li class="header">Üyelik</li>
-                    <li class="treeview<?php isAdminNavActive(['users', 'user-login-activities', 'account-deletion-requests']); ?>">
-                        <a href="#"><i class="fa fa-users"></i><span>Kullanıcılar</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="nav-users"><a href="<?= adminUrl('users'); ?>"> Kullanıcılar</a></li>
-                            <li class="nav-user-login-activities"><a href="<?= adminUrl('user-login-activities'); ?>"> Giriş Aktiviteleri</a></li>
-                            <li class="nav-account-deletion-requests"><a href="<?= adminUrl('account-deletion-requests'); ?>"> Hesap Silme Talepleri</a></li>
-                        </ul>
+                if (hasPermission('blog')):?>
+                    <li class="nav-blog-posts">
+                        <a href="<?= adminUrl('blog-posts'); ?>"><i class="fa fa-file-text"></i><span>Blog</span></a>
+                    </li>
+                <?php endif;
+                if (hasPermission('location')):?>
+                    <li class="nav-countries">
+                        <a href="<?= adminUrl('countries'); ?>"><i class="fa fa-map-marker"></i><span>Konum</span></a>
+                    </li>
+                <?php endif; ?>
+                
+                <li class="header">Kullanıcılar</li>
+                <?php if (hasPermission('membership')):?>
+                    <li class="nav-users">
+                        <a href="<?= adminUrl('users'); ?>"><i class="fa fa-users"></i><span>Kullanıcılar</span></a>
                     </li>
                     <li class="nav-membership-plans">
                         <a href="<?= adminUrl('membership-plans'); ?>"><i class="fa fa-adjust"></i><span>Üyelik Planları</span></a>
-                    </li>
-                    <li class="nav-shop-opening-requests">
-                        <a href="<?= adminUrl('shop-opening-requests'); ?>"><i class="fa fa-question-circle"></i><span>Mağaza Açma Talepleri</span></a>
                     </li>
                     <li class="nav-roles-permissions">
                         <a href="<?= adminUrl('roles-permissions'); ?>"><i class="fa fa-key"></i><span>Roller ve İzinler</span></a>
                     </li>
                 <?php endif; ?>
-                <li class="header hide li-mt">Yönetim Araçları</li>
+                
+                <li class="header hide li-mt">Yönetim</li>
                 <?php $showMtTools = false;
                 if (hasPermission('help_center')):
                     $showMtTools = true; ?>
-                    <li class="treeview<?php isAdminNavActive(['knowledge-base', 'knowledge-base-categories', 'support-tickets']); ?>">
-                        <a href="#"><i class="fa fa-support"></i><span>Yardım Merkezi</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <li class="nav-support-tickets"><a href="<?= adminUrl('support-tickets'); ?>"> Destek Biletleri</a></li>
-                            <li class="nav-knowledge-base"><a href="<?= adminUrl('knowledge-base'); ?>"> Bilgi Bankası</a></li>
-                        </ul>
+                    <li class="nav-support-tickets">
+                        <a href="<?= adminUrl('support-tickets'); ?>"><i class="fa fa-support"></i><span>Destek Biletleri</span></a>
+                    </li>
+                <?php endif;
+                if (hasPermission('chat_messages')):
+                    $showMtTools = true; ?>
+                    <li class="nav-chat-messages">
+                        <a href="<?= adminUrl('chat-messages'); ?>"><i class="fa fa-comments"></i><span>Sohbet Mesajları</span></a>
+                    </li>
+                <?php endif;
+                if (hasPermission('contact_messages')):
+                    $showMtTools = true; ?>
+                    <li class="nav-contact-messages">
+                        <a href="<?= adminUrl('contact-messages'); ?>"><i class="fa fa-paper-plane"></i><span>İletişim Mesajları</span></a>
+                    </li>
+                <?php endif;
+                if (hasPermission('reviews')):
+                    $showMtTools = true; ?>
+                    <li class="nav-reviews">
+                        <a href="<?= adminUrl('reviews'); ?>"><i class="fa fa-star"></i><span>Değerlendirmeler</span></a>
+                    </li>
+                <?php endif;
+                if (hasPermission('comments')):
+                    $showMtTools = true; ?>
+                    <li class="nav-product-comments">
+                        <a href="<?= adminUrl($generalSettings->comment_approval_system == 1 ? 'pending-product-comments' : 'product-comments'); ?>"><i class="fa fa-comments"></i><span>Yorumlar</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('storage')):
@@ -364,106 +339,37 @@
                 if (hasPermission('cache_system')):
                     $showMtTools = true; ?>
                     <li class="nav-cache-system">
-                        <a href="<?= adminUrl('cache-system'); ?>"><i class="fa fa-database"></i><span>Önbellek Sistemi</span></a>
+                        <a href="<?= adminUrl('cache-system'); ?>"><i class="fa fa-database"></i><span>Önbellek</span></a>
                     </li>
                 <?php endif;
                 if (hasPermission('seo_tools')):
                     $showMtTools = true; ?>
                     <li class="nav-seo-tools">
-                        <a href="<?= adminUrl('seo-tools'); ?>"><i class="fa fa-wrench"></i> <span>SEO Araçları</span></a>
+                        <a href="<?= adminUrl('seo-tools'); ?>"><i class="fa fa-wrench"></i><span>SEO Araçları</span></a>
+                    </li>
+                <?php endif; ?>
+                
+                <li class="header">Ayarlar</li>
+                <?php if (hasPermission('general_settings')): ?>
+                    <li class="nav-general-settings">
+                        <a href="<?= adminUrl('general-settings'); ?>"><i class="fa fa-cogs"></i><span>Genel Ayarlar</span></a>
                     </li>
                 <?php endif;
-                if (hasPermission('ad_spaces')):
-                    $showMtTools = true; ?>
-                    <li class="nav-ad-spaces">
-                        <a href="<?= adminUrl('ad-spaces'); ?>"><i class="fa fa-dollar"></i> <span>Reklam Alanları</span></a>
+                if (hasPermission('product_settings')): ?>
+                    <li class="nav-product-settings">
+                        <a href="<?= adminUrl('product-settings'); ?>"><i class="fa fa-shopping-bag"></i><span>Ürün Ayarları</span></a>
                     </li>
                 <?php endif;
-                if (hasPermission('chat_messages')):
-                    $showMtTools = true; ?>
-                    <li class="nav-chat-messages">
-                        <a href="<?= adminUrl('chat-messages'); ?>"><i class="fa fa-comments" aria-hidden="true"></i><span>Sohbet Mesajları</span></a>
+                if (hasPermission('payment_settings')):?>
+                    <li class="nav-payment-settings">
+                        <a href="<?= adminUrl('payment-settings'); ?>"><i class="fa fa-credit-card"></i><span>Ödeme Ayarları</span></a>
                     </li>
                 <?php endif;
-                if (hasPermission('contact_messages')):
-                    $showMtTools = true; ?>
-                    <li class="nav-contact-messages">
-                        <a href="<?= adminUrl('contact-messages'); ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>İletişim Mesajları</span></a>
+                if (hasPermission('preferences')): ?>
+                    <li class="nav-preferences">
+                        <a href="<?= adminUrl('preferences'); ?>"><i class="fa fa-check-square-o"></i><span>Tercihler</span></a>
                     </li>
                 <?php endif;
-                if (hasPermission('reviews')):
-                    $showMtTools = true; ?>
-                    <li class="nav-reviews">
-                        <a href="<?= adminUrl('reviews'); ?>"><i class="fa fa-star"></i><span>Değerlendirmeler</span></a>
-                    </li>
-                <?php endif;
-                if (hasPermission('comments')):
-                    $showMtTools = true; ?>
-                    <li class="treeview<?php isAdminNavActive(['pending-product-comments', 'pending-blog-comments', 'product-comments', 'blog-comments']); ?>">
-                        <a href="#"><i class="fa fa-comments"></i><span>Yorumlar</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                        <ul class="treeview-menu">
-                            <?php if ($generalSettings->comment_approval_system == 1): ?>
-                                <li class="nav-pending-product-comments"><a href="<?= adminUrl('pending-product-comments'); ?>"> Ürün Yorumları</a></li>
-                                <li class="nav-pending-blog-comments"><a href="<?= adminUrl('pending-blog-comments'); ?>"> Blog Yorumları</a></li>
-                            <?php else: ?>
-                                <li class="nav-product-comments"><a href="<?= adminUrl('product-comments'); ?>"> Ürün Yorumları</a></li>
-                                <li class="nav-blog-comments"><a href="<?= adminUrl('blog-comments'); ?>"> Blog Yorumları</a></li>
-                            <?php endif; ?>
-                        </ul>
-                    </li>
-                <?php endif;
-                if (hasPermission('abuse_reports')):
-                    $showMtTools = true; ?>
-                    <li class="nav-abuse-reports">
-                        <a href="<?= adminUrl('abuse-reports'); ?>"><i class="fa fa-warning" aria-hidden="true"></i><span>Kötüye Kullanım Raporları</span></a>
-                    </li>
-                <?php endif;
-                if (hasPermission('newsletter')):
-                    $showMtTools = true; ?>
-                    <li class="nav-newsletter">
-                        <a href="<?= adminUrl('newsletter'); ?>"><i class="fa fa-envelope-o" aria-hidden="true"></i><span>Bülten</span></a>
-                    </li>
-                <?php endif;
-                if (hasPermission('general_settings')):
-                    $showMtTools = true; ?>
-                    <li class="nav-affiliate-program">
-                        <a href="<?= adminUrl('affiliate-program'); ?>"><i class="fa fa-link" aria-hidden="true"></i><span>Ortaklık Programı</span></a>
-                    </li>
-                <?php endif;
-                if (hasPermission('preferences') || hasPermission('general_settings') || hasPermission('product_settings') || hasPermission('payment_settings')):?>
-                    <li class="header text-uppercase">Ayarlar</li>
-                    <?php if (hasPermission('preferences')): ?>
-                        <li class="nav-preferences">
-                            <a href="<?= adminUrl('preferences'); ?>"><i class="fa fa-check-square-o"></i><span>Tercihler</span></a>
-                        </li>
-                    <?php endif;
-                    if (hasPermission('general_settings') || hasPermission('product_settings') || hasPermission('payment_settings')): ?>
-                        <li class="treeview<?php isAdminNavActive(['general-settings', 'language-settings', 'social-login', 'update-language', 'edit-translations', 'email-settings', 'visual-settings', 'font-settings', 'route-settings',
-                            'product-settings', 'payment-settings', 'currency-settings']); ?>">
-                            <a href="#"><i class="fa fa-cogs"></i><span>Ayarlar</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
-                            <ul class="treeview-menu">
-                                <?php if (hasPermission('general_settings')) : ?>
-                                    <li class="nav-general-settings"><a href="<?= adminUrl('general-settings'); ?>"> Genel Ayarlar</a></li>
-                                    <li class="nav-language-settings"><a href="<?= adminUrl('language-settings'); ?>"> Dil Ayarları</a></li>
-                                <?php endif;
-                                if (hasPermission('product_settings')): ?>
-                                    <li class="nav-product-settings"><a href="<?= adminUrl('product-settings'); ?>"> Ürün Ayarları</a></li>
-                                <?php endif;
-                                if (hasPermission('payment_settings')):?>
-                                    <li class="nav-payment-settings"><a href="<?= adminUrl('payment-settings'); ?>"> Ödeme Ayarları</a></li>
-                                    <li class="nav-currency-settings"><a href="<?= adminUrl('currency-settings'); ?>"> Para Birimi Ayarları</a></li>
-                                <?php endif;
-                                if (hasPermission('general_settings')) : ?>
-                                    <li class="nav-email-settings"><a href="<?= adminUrl('email-settings'); ?>"> E-posta Ayarları</a></li>
-                                    <li class="nav-social-login"><a href="<?= adminUrl('social-login'); ?>"> Sosyal Giriş</a></li>
-                                    <li class="nav-visual-settings"><a href="<?= adminUrl('visual-settings'); ?>"> Görsel Ayarlar</a></li>
-                                    <li class="nav-font-settings"><a href="<?= adminUrl('font-settings'); ?>"> Font Ayarları</a></li>
-                                    <li class="nav-route-settings"><a href="<?= adminUrl('route-settings'); ?>"> Rota Ayarları</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                    <?php endif;
-                endif;
                 if (isSuperAdmin()): ?>
                     <li>
                         <div class="database-backup">
