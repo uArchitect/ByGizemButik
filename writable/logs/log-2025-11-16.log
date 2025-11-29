@@ -1,0 +1,10 @@
+ERROR - 2025-11-16 16:24:27 --> mysqli_sql_exception: Commands out of sync; you can't run this command now in /home/bygizemb/public_html/system/Database/MySQLi/Connection.php:312
+Stack trace:
+#0 /home/bygizemb/public_html/system/Database/MySQLi/Connection.php(312): mysqli->query()
+#1 /home/bygizemb/public_html/system/Database/BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute()
+#2 /home/bygizemb/public_html/system/Database/BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery()
+#3 /home/bygizemb/public_html/system/Database/BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query()
+#4 /home/bygizemb/public_html/system/Session/Handlers/DatabaseHandler.php(199): CodeIgniter\Database\BaseBuilder->insert()
+#5 [internal function]: CodeIgniter\Session\Handlers\DatabaseHandler->write()
+#6 [internal function]: session_write_close()
+#7 {main}
