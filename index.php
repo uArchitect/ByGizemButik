@@ -34,6 +34,12 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
     chdir(FCPATH);
 }
 
+// Set environment to development
+if (!isset($_ENV['CI_ENVIRONMENT']) && !isset($_SERVER['CI_ENVIRONMENT'])) {
+    $_ENV['CI_ENVIRONMENT'] = 'development';
+    $_SERVER['CI_ENVIRONMENT'] = 'development';
+}
+
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
