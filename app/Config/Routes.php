@@ -68,7 +68,7 @@ $routes->get($rtAdmin . '/edit-category/(:num)', 'CategoryController::editCatego
 $routes->get($rtAdmin . '/bulk-category-upload', 'CategoryController::bulkCategoryUpload');
 //brand
 $routes->get($rtAdmin . '/brands', 'CategoryController::brands');
-$routes->get($rtAdmin . '/add-brand', 'CategoryController::AddBrand');
+$routes->get($rtAdmin . '/add-brand', 'CategoryController::addBrand');
 $routes->get($rtAdmin . '/edit-brand/(:num)', 'CategoryController::editBrand/$1');
 $routes->get($rtAdmin . '/edit-category/(:num)', 'CategoryController::editCategory/$1');
 $routes->get($rtAdmin . '/bulk-category-upload', 'CategoryController::bulkCategoryUpload');

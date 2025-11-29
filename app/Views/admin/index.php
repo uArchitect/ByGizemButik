@@ -1,3 +1,82 @@
+<!-- Hızlı İşlemler -->
+<div class="row m-t-10">
+    <div class="col-lg-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-bolt"></i> Hızlı İşlemler</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <?php if (hasPermission('products')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= generateDashUrl('add_product'); ?>" target="_blank" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px;">
+                                <i class="fa fa-plus-circle fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Ürün Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('categories')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('add-category'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #00a65a; color: white;">
+                                <i class="fa fa-folder-plus fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Kategori Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('pages')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('add-page'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #3c8dbc; color: white;">
+                                <i class="fa fa-file-text fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Sayfa Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('blog')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('blog-add-post'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #f39c12; color: white;">
+                                <i class="fa fa-pencil fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Blog Yazısı Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('brands')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('add-brand'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #9c27b0; color: white;">
+                                <i class="fa fa-asterisk fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Marka Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('slider')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('slider'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #dd4b39; color: white;">
+                                <i class="fa fa-sliders fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Slider Yönet</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('membership')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('users'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #00c0ef; color: white;">
+                                <i class="fa fa-user-plus fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Kullanıcı Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif;
+                    if (hasPermission('custom_fields')): ?>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                            <a href="<?= adminUrl('add-custom-field'); ?>" class="btn btn-app btn-block" style="min-height: 80px; padding: 15px; background-color: #605ca8; color: white;">
+                                <i class="fa fa-plus-square fa-2x"></i>
+                                <span style="font-size: 14px; font-weight: bold;">Özel Alan Ekle</span>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row m-t-10">
     <?php if (hasPermission('orders')): ?>
         <div class="col-lg-3 col-xs-6">
@@ -455,6 +534,18 @@ if (hasPermission('products')): ?>
 <style>
     .small-box h3 {
         height: 42px;
+    }
+    .btn-app {
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    .btn-app:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .btn-app i {
+        margin-bottom: 5px;
     }
 </style>
 
