@@ -84,9 +84,10 @@ if ($baseVars->rtl == true): ?>
 <div class="row-align-items-center">
 <div class="logo">
 <a href="<?= langBaseUrl(); ?>" class="logo-text-link">
-    <span class="logo-text">
-        <span class="logo-main">Butik</span>
-        <span class="logo-sub">Gizim</span>
+    <span class="logo-monogram">
+        <span class="logo-letter">G</span>
+        <span class="logo-amp">&</span>
+        <span class="logo-letter">A</span>
     </span>
 </a>
 </div>
@@ -95,36 +96,38 @@ if ($baseVars->rtl == true): ?>
     text-decoration: none !important;
     display: inline-block;
 }
-.logo-text {
+.logo-monogram {
     display: flex;
-    flex-direction: column;
-    line-height: 1.2;
+    align-items: center;
+    justify-content: center;
     font-family: 'Playfair Display', 'Georgia', serif;
+    line-height: 1;
 }
-.logo-main {
-    font-size: 32px;
+.logo-letter {
+    font-size: 42px;
     font-weight: 700;
     color: #d4a574;
-    letter-spacing: 2px;
+    letter-spacing: 0;
     text-transform: uppercase;
-    margin-bottom: -5px;
+    position: relative;
+    display: inline-block;
 }
-.logo-sub {
-    font-size: 24px;
-    font-weight: 300;
+.logo-amp {
+    font-size: 28px;
+    font-weight: 400;
     color: #8b6f47;
-    letter-spacing: 4px;
+    margin: 0 8px;
     font-style: italic;
-    margin-left: 5px;
+    position: relative;
+    top: -2px;
 }
 @media (max-width: 768px) {
-    .logo-main {
-        font-size: 26px;
-        letter-spacing: 1.5px;
+    .logo-letter {
+        font-size: 32px;
     }
-    .logo-sub {
-        font-size: 18px;
-        letter-spacing: 3px;
+    .logo-amp {
+        font-size: 22px;
+        margin: 0 6px;
     }
 }
 </style>
@@ -184,9 +187,10 @@ endif; ?>
 <div class="flex-item flex-item-mid justify-content-center">
 <div class="mobile-logo">
 <a href="<?= langBaseUrl(); ?>" class="logo logo-text-link">
-    <span class="logo-text">
-        <span class="logo-main">Butik</span>
-        <span class="logo-sub">Gizim</span>
+    <span class="logo-monogram">
+        <span class="logo-letter">G</span>
+        <span class="logo-amp">&</span>
+        <span class="logo-letter">A</span>
     </span>
 </a>
 </div>

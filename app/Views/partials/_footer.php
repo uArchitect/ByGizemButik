@@ -8,9 +8,10 @@
 <div class="row-custom">
 <div class="footer-logo">
 <a href="<?= langBaseUrl(); ?>" class="logo-text-link">
-    <span class="logo-text">
-        <span class="logo-main">Butik</span>
-        <span class="logo-sub">Gizim</span>
+    <span class="logo-monogram">
+        <span class="logo-letter">G</span>
+        <span class="logo-amp">&</span>
+        <span class="logo-letter">A</span>
     </span>
 </a>
 </div>
@@ -19,27 +20,28 @@
     text-decoration: none !important;
     display: inline-block;
 }
-.footer-logo .logo-text {
+.footer-logo .logo-monogram {
     display: flex;
-    flex-direction: column;
-    line-height: 1.2;
+    align-items: center;
+    justify-content: center;
     font-family: 'Playfair Display', 'Georgia', serif;
+    line-height: 1;
 }
-.footer-logo .logo-main {
-    font-size: 28px;
+.footer-logo .logo-letter {
+    font-size: 36px;
     font-weight: 700;
     color: #d4a574;
-    letter-spacing: 2px;
+    letter-spacing: 0;
     text-transform: uppercase;
-    margin-bottom: -5px;
 }
-.footer-logo .logo-sub {
-    font-size: 20px;
-    font-weight: 300;
+.footer-logo .logo-amp {
+    font-size: 24px;
+    font-weight: 400;
     color: #8b6f47;
-    letter-spacing: 4px;
+    margin: 0 6px;
     font-style: italic;
-    margin-left: 5px;
+    position: relative;
+    top: -2px;
 }
 </style>
 </div>
