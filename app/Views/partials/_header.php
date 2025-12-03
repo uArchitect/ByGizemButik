@@ -59,6 +59,9 @@ if ($generalSettings->pwa_status == 1): ?>
 <?= csrf_meta(); ?>
 
 <?= view('partials/_fonts'); ?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= base_url('assets/css/style-2.5.min.css'); ?>"/>
 <link rel="stylesheet" href="<?= base_url('assets/css/plugins-2.5.css'); ?>"/>
 <?= view('partials/_css_js_header');
@@ -80,8 +83,51 @@ if ($baseVars->rtl == true): ?>
 <div class="col-md-7 nav-top-left">
 <div class="row-align-items-center">
 <div class="logo">
-<a href="<?= langBaseUrl(); ?>"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" style="max-height: 80px; width: auto; height: auto;"></a>
+<a href="<?= langBaseUrl(); ?>" class="logo-text-link">
+    <span class="logo-text">
+        <span class="logo-main">Butik</span>
+        <span class="logo-sub">Gizim</span>
+    </span>
+</a>
 </div>
+<style>
+.logo-text-link {
+    text-decoration: none !important;
+    display: inline-block;
+}
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    font-family: 'Playfair Display', 'Georgia', serif;
+}
+.logo-main {
+    font-size: 32px;
+    font-weight: 700;
+    color: #d4a574;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: -5px;
+}
+.logo-sub {
+    font-size: 24px;
+    font-weight: 300;
+    color: #8b6f47;
+    letter-spacing: 4px;
+    font-style: italic;
+    margin-left: 5px;
+}
+@media (max-width: 768px) {
+    .logo-main {
+        font-size: 26px;
+        letter-spacing: 1.5px;
+    }
+    .logo-sub {
+        font-size: 18px;
+        letter-spacing: 3px;
+    }
+}
+</style>
 <div class="top-search-bar">
 <form action="<?= generateUrl('products'); ?>" method="get" id="form_validate_search" class="form_search_main">
 <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search_main" class="form-control input-search" placeholder="<?= "Ürün, kategori, marka ara"; ?>" required autocomplete="off">
@@ -137,7 +183,12 @@ endif; ?>
 </div>
 <div class="flex-item flex-item-mid justify-content-center">
 <div class="mobile-logo">
-<a href="<?= langBaseUrl(); ?>" class="logo"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" style="max-height: 60px; width: auto; height: auto;"></a>
+<a href="<?= langBaseUrl(); ?>" class="logo logo-text-link">
+    <span class="logo-text">
+        <span class="logo-main">Butik</span>
+        <span class="logo-sub">Gizim</span>
+    </span>
+</a>
 </div>
 </div>
 <div class="flex-item flex-item-right justify-content-end">

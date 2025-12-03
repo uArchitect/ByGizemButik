@@ -7,8 +7,41 @@
 <div class="col-12 col-lg-4 footer-widget">
 <div class="row-custom">
 <div class="footer-logo">
-<a href="<?= langBaseUrl(); ?>"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" style="max-height: 70px; width: auto; height: auto;"></a>
+<a href="<?= langBaseUrl(); ?>" class="logo-text-link">
+    <span class="logo-text">
+        <span class="logo-main">Butik</span>
+        <span class="logo-sub">Gizim</span>
+    </span>
+</a>
 </div>
+<style>
+.footer-logo .logo-text-link {
+    text-decoration: none !important;
+    display: inline-block;
+}
+.footer-logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    font-family: 'Playfair Display', 'Georgia', serif;
+}
+.footer-logo .logo-main {
+    font-size: 28px;
+    font-weight: 700;
+    color: #d4a574;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: -5px;
+}
+.footer-logo .logo-sub {
+    font-size: 20px;
+    font-weight: 300;
+    color: #8b6f47;
+    letter-spacing: 4px;
+    font-style: italic;
+    margin-left: 5px;
+}
+</style>
 </div>
 <div class="row-custom">
 <div class="footer-about">
