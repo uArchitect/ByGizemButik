@@ -80,7 +80,7 @@ if ($baseVars->rtl == true): ?>
 <div class="col-md-7 nav-top-left">
 <div class="row-align-items-center">
 <div class="logo">
-<a href="<?= langBaseUrl(); ?>"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" width="auto" height="200px"></a>
+<a href="<?= langBaseUrl(); ?>"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" style="max-height: 80px; width: auto; height: auto;"></a>
 </div>
 <div class="top-search-bar">
 <form action="<?= generateUrl('products'); ?>" method="get" id="form_validate_search" class="form_search_main">
@@ -137,7 +137,7 @@ endif; ?>
 </div>
 <div class="flex-item flex-item-mid justify-content-center">
 <div class="mobile-logo">
-<a href="<?= langBaseUrl(); ?>" class="logo"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" width="auto" height="200px"></a>
+<a href="<?= langBaseUrl(); ?>" class="logo"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" style="max-height: 60px; width: auto; height: auto;"></a>
 </div>
 </div>
 <div class="flex-item flex-item-right justify-content-end">

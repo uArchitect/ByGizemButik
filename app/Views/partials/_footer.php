@@ -7,7 +7,7 @@
 <div class="col-12 col-lg-4 footer-widget">
 <div class="row-custom">
 <div class="footer-logo">
-<a href="<?= langBaseUrl(); ?>"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" width="auto" height="200px"></a>
+<a href="<?= langBaseUrl(); ?>"><img src="https://bygizembutik.com/uploads/logo/logo_68f7aeffe72885-42413672.png" alt="logo" style="max-height: 70px; width: auto; height: auto;"></a>
 </div>
 </div>
 <div class="row-custom">
