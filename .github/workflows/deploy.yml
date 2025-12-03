@@ -15,18 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          extensions: mbstring, xml, curl, zip, gd, mysqli, pdo, pdo_mysql
-      
-      - name: Install dependencies
-        run: |
-          if [ -f composer.json ]; then
-            composer install --no-dev --optimize-autoloader
-          fi
-      
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
@@ -78,4 +66,9 @@ jobs:
             **/assets/file/**
             **/assets/vendor/**
             **/assets/admin/vendor/**
+            **/writable/cache/**
+            **/writable/logs/**
+            **/writable/debugbar/**
+            **/writable/session/**
+            **/writable/uploads/**
 
