@@ -1,0 +1,69 @@
+# CodeIgniter
+/writable/cache/**
+/writable/logs/**
+/writable/debugbar/**
+/writable/session/**
+/writable/uploads/**
+!/writable/.htaccess
+!/writable/**/index.html
+
+# Environment
+.env
+.env.*
+
+# Third Party Libraries (should be installed via composer or manually)
+/app/ThirdParty/**
+
+# Vendor directories
+/vendor/
+/assets/vendor/
+/assets/admin/vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Uploads
+/uploads/**
+
+# Install directory
+/install/**
+
+# System files
+/system/**
+
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Composer
+composer.lock
+composer.phar
+
+# Tests
+/tests/
+/test/
+phpunit.xml
+.phpunit.result.cache
+
+# Documentation
+*.md
+README*
+LICENSE*
+CHANGELOG*
+
+# Archives
+*.zip
+
+# Database
+*.sql
+*.sqlite
