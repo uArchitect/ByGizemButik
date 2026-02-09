@@ -14,7 +14,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="<?= adminUrl('login'); ?>"><b>uCommerce22</b>&nbsp;Panel</a>
+        <a href="<?= adminUrl('login'); ?>"><b>uCommerce</b>&nbsp;Panel</a>
     </div>
     <div class="login-box-body">
         <h4 class="login-box-msg">Giriş Yap</h4>
