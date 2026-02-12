@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="row-custom text-center promoted-load-more-container">
-            <button type="button" class="button-link link-see-more" onclick="loadMorePromotedProducts();" aria-label="load-more-promoted"><span><?= "Daha Fazla Yükle"; ?>&nbsp;<i class="icon-arrow-down"></i></span></button>
+            <button type="button" class="button-link link-see-more" onclick="loadMorePromotedProducts();" aria-label="daha-fazla-one-cikan-yukle"><span><?= "Daha Fazla Yükle"; ?>&nbsp;<i class="icon-arrow-down"></i></span></button>
         </div>
     <?php endif; ?>
 </div>

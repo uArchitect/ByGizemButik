@@ -29,8 +29,8 @@
                 endif; ?>
             </div>
             <div id="main-slider-nav" class="main-slider-nav">
-                <button class="prev" aria-label="btn-prev-slider"><i class="icon-arrow-left"></i></button>
-                <button class="next" aria-label="btn-next-slider"><i class="icon-arrow-right"></i></button>
+                <button class="prev" aria-label="onceki-slider"><i class="icon-arrow-left"></i></button>
+                <button class="next" aria-label="sonraki-slider"><i class="icon-arrow-right"></i></button>
             </div>
         </div>
     </div>
@@ -70,8 +70,8 @@
                 endif; ?>
             </div>
             <div id="main-mobile-slider-nav" class="main-slider-nav">
-                <button class="prev" aria-label="btn-prev-slider-mobile"><i class="icon-arrow-left"></i></button>
-                <button class="next" aria-label="btn-next-slider-mobile"><i class="icon-arrow-right"></i></button>
+                <button class="prev" aria-label="onceki-slider-mobil"><i class="icon-arrow-left"></i></button>
+                <button class="next" aria-label="sonraki-slider-mobil"><i class="icon-arrow-right"></i></button>
             </div>
         </div>
     </div>

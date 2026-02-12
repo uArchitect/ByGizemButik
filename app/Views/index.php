@@ -48,8 +48,8 @@
                     <div class="section-header section-header-slider">
                         <h3 class="title">Markaya Göre Alışveriş</h3>
                         <div class="section-slider-nav" id="brand-slider-nav">
-                            <button class="prev" aria-label="btn-prev-brand"><i class="icon-arrow-left"></i></button>
-                            <button class="next" aria-label="btn-next-brand"><i class="icon-arrow-right"></i></button>
+                            <button class="prev" aria-label="onceki-marka"><i class="icon-arrow-left"></i></button>
+                            <button class="next" aria-label="sonraki-marka"><i class="icon-arrow-right"></i></button>
                         </div>
                     </div>
                     <div class="brand-slider-container" <?= $baseVars->rtl == true ? 'dir="rtl"' : ''; ?>>
@@ -75,8 +75,8 @@
                     <div class="section-header section-header-slider">
                         <h3 class="title"><a href="<?= generateUrl('blog'); ?>"><?= "Son Blog Yazıları"; ?></a></h3>
                         <div class="section-slider-nav" id="blog-slider-nav">
-                            <button class="prev" aria-label="btn-prev-blog"><i class="icon-arrow-left"></i></button>
-                            <button class="next" aria-label="btn-next-blog"><i class="icon-arrow-right"></i></button>
+                            <button class="prev" aria-label="onceki-blog"><i class="icon-arrow-left"></i></button>
+                            <button class="next" aria-label="sonraki-blog"><i class="icon-arrow-right"></i></button>
                         </div>
                     </div>
                     <div class="row-custom">

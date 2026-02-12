@@ -6,8 +6,8 @@
                 <div class="section-header section-header-slider">
                     <h3 class="title"><a href="<?= generateCategoryUrl($category); ?>"><?= getCategoryName($category, $activeLang->id); ?></a></h3>
                     <div class="section-slider-nav" id="category-products-slider-nav-<?= $category->id; ?>">
-                        <button class="prev" aria-label="btn-prev-cat-<?= $category->id; ?>"><i class="icon-arrow-left"></i></button>
-                        <button class="next" aria-label="btn-next-cat-<?= $category->id; ?>"><i class="icon-arrow-right"></i></button>
+                        <button class="prev" aria-label="onceki-kategori-<?= $category->id; ?>"><i class="icon-arrow-left"></i></button>
+                        <button class="next" aria-label="sonraki-kategori-<?= $category->id; ?>"><i class="icon-arrow-right"></i></button>
                     </div>
                 </div>
                 <div class="row-custom category-slider-container" <?= $baseVars->rtl == true ? 'dir="rtl"' : ''; ?>>
