@@ -104,6 +104,12 @@
             $errorMessage .= ' [HATA: secret_key boş!]';
         }
         setErrorMessage($errorMessage);
+        // Debug log dosyasını oku
+        $debugLogContent = '';
+        $debugLogFile = WRITEPATH . 'paytr/debug_log.json';
+        if (file_exists($debugLogFile)) {
+            $debugLogContent = @file_get_contents($debugLogFile);
+        }
         ?>
         <div class="row">
             <div class="col-12">
@@ -112,11 +118,17 @@
                     <strong>PayTR Entegrasyon Hatası</strong><br>
                     <?= esc($errorMessage); ?><br><br>
                     <small>Lütfen admin panelinden PayTR ayarlarını kontrol edin:<br>
-                    - Mağaza No (Merchant ID): <?= !empty($paymentGateway->public_key) ? '✓ Dolu' : '✗ Boş'; ?><br>
-                    - Mağaza Parola (Merchant Key): <?= !empty($paymentGateway->secret_key) ? '✓ Dolu' : '✗ Boş'; ?><br>
-                    - Mağaza Gizli Anahtar (Merchant Salt): <?= !empty($paymentGateway->merchant_salt) ? '✓ Dolu' : '✗ Boş'; ?><br>
+                    - Mağaza No (Merchant ID): <?= !empty($paymentGateway->public_key) ? '✓ Dolu (' . substr($paymentGateway->public_key, 0, 3) . '***)' : '✗ Boş'; ?><br>
+                    - Mağaza Parola (Merchant Key): <?= !empty($paymentGateway->secret_key) ? '✓ Dolu (' . substr($paymentGateway->secret_key, 0, 3) . '***)' : '✗ Boş'; ?><br>
+                    - Mağaza Gizli Anahtar (Merchant Salt): <?= !empty($paymentGateway->merchant_salt) ? '✓ Dolu (' . substr($paymentGateway->merchant_salt, 0, 3) . '***)' : '✗ Boş'; ?><br>
                     - Mod: <?= esc($paymentGateway->environment ?? 'Belirtilmemiş'); ?></small>
                 </div>
+                <?php if (!empty($debugLogContent)): ?>
+                <div class="alert alert-info">
+                    <strong>Debug Bilgisi (Geliştirici İçin):</strong><br>
+                    <pre style="font-size: 11px; max-height: 300px; overflow-y: auto;"><?= esc($debugLogContent); ?></pre>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     <?php endif;

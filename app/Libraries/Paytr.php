@@ -90,6 +90,21 @@ class Paytr
             'lang' => $lang,
         ];
 
+        // Debug log
+        $debugLog = [
+            'time' => date('Y-m-d H:i:s'),
+            'merchant_id' => $this->merchantId,
+            'merchant_oid' => $merchantOid,
+            'payment_amount' => $paymentAmount,
+            'email' => $email,
+            'user_ip' => $userIp,
+            'test_mode' => $testMode,
+            'currency' => $currency,
+            'merchant_ok_url' => $merchantOkUrl,
+            'merchant_fail_url' => $merchantFailUrl,
+            'notification_url' => $notificationUrl,
+        ];
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://www.paytr.com/odeme/api/get-token');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -104,6 +119,8 @@ class Paytr
         if (curl_errno($ch)) {
             $errorMsg = curl_error($ch);
             curl_close($ch);
+            $debugLog['curl_error'] = $errorMsg;
+            @file_put_contents(WRITEPATH . 'paytr/debug_log.json', json_encode($debugLog, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
             return [
                 'status' => 'error',
                 'reason' => 'cURL Error: ' . $errorMsg
@@ -113,21 +130,15 @@ class Paytr
         curl_close($ch);
 
         $response = json_decode($result, true);
+        $debugLog['raw_response'] = substr($result, 0, 500);
+        $debugLog['parsed_response'] = $response;
+        @file_put_contents(WRITEPATH . 'paytr/debug_log.json', json_encode($debugLog, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
         if (empty($response)) {
             return [
                 'status' => 'error',
                 'reason' => 'PayTR API yanıt vermedi. Yanıt: ' . substr($result, 0, 200)
             ];
-        }
-
-        // PayTR hata mesajlarını daha anlaşılır hale getir
-        if (isset($response['status']) && $response['status'] == 'failed') {
-            $reason = !empty($response['reason']) ? $response['reason'] : 'Bilinmeyen hata';
-            if (strpos($reason, 'Geçersiz istek') !== false || strpos($reason, 'mağaza aktif değil') !== false) {
-                $reason .= ' - Lütfen PayTR mağaza panelinden hesabınızın aktif olduğundan ve entegrasyon bilgilerinin doğru olduğundan emin olun.';
-            }
-            $response['reason'] = $reason;
         }
 
         return $response;
