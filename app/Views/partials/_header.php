@@ -134,7 +134,7 @@ if ($baseVars->rtl == true): ?>
 <div class="top-search-bar">
 <form action="<?= generateUrl('products'); ?>" method="get" id="form_validate_search" class="form_search_main">
 <input type="text" name="search" maxlength="300" pattern=".*\S+.*" id="input_search_main" class="form-control input-search" placeholder="<?= "Ürün, kategori, marka ara"; ?>" required autocomplete="off">
-<button class="btn btn-default btn-search" aria-label="search"><i class="icon-search"></i></button>
+<button class="btn btn-default btn-search" aria-label="ara"><i class="icon-search"></i></button>
 <div id="response_search_results" class="search-results-ajax mds-scrollbar"></div>
 </form>
 </div>
@@ -160,7 +160,7 @@ if ($baseVars->rtl == true): ?>
 else: ?>
 <?php if ($generalSettings->multi_vendor_system == 1): ?>
 <li class="nav-item m-r-0">
-<button type="button" class="btn btn-md btn-custom btn-sell-now m-r-0" data-toggle="modal" data-target="#loginModal" aria-label="sell-now"><?= "Şimdi Sat"; ?></button>
+<button type="button" class="btn btn-md btn-custom btn-sell-now m-r-0" data-toggle="modal" data-target="#loginModal" aria-label="simdi-sat"><?= "Şimdi Sat"; ?></button>
 </li>
 <?php endif;
 endif; ?>
@@ -182,7 +182,7 @@ endif; ?>
 <div class="nav-mobile-header-container">
 <div class="d-flex justify-content-between">
 <div class="flex-item flex-item-left item-menu-icon justify-content-start">
-<button type="button" class="btn-open-mobile-nav button-link" aria-label="open-mobile-menu"><i class="icon-menu"></i></button>
+<button type="button" class="btn-open-mobile-nav button-link" aria-label="mobil-menuyi-ac"><i class="icon-menu"></i></button>
 </div>
 <div class="flex-item flex-item-mid justify-content-center">
 <div class="mobile-logo">
@@ -196,7 +196,7 @@ endif; ?>
 </div>
 </div>
 <div class="flex-item flex-item-right justify-content-end">
-<button type="button" class="button-link a-search-icon" aria-label="button-mobile-search-icon"><i id="searchIconMobile" class="icon-search"></i></button>
+<button type="button" class="button-link a-search-icon" aria-label="mobil-arama-ikonu"><i id="searchIconMobile" class="icon-search"></i></button>
 <?php if (isSaleActive()): ?>
 <a href="<?= generateUrl('cart'); ?>" class="a-mobile-cart"><i class="icon-cart"></i><span class="notification span_cart_product_count"><?= getCartProductCount(); ?></span></a>
 <?php endif; ?>

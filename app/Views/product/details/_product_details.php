@@ -22,7 +22,7 @@
                 <div class="product-details-review">
                     <?= view('partials/_review_stars', ['rating' => $product->rating]); ?>
                     <?php if ($product->rating > 0): ?>
-                        <button type="button" id="btnGoToReviews" class="button-link review-text" aria-label="go-to-reviews"><?= "Yorumlar"; ?>&nbsp;(<?= numberFormatShort($reviewsCount); ?>)</button>
+                        <button type="button" id="btnGoToReviews" class="button-link review-text" aria-label="yorumlara-git"><?= "Yorumlar"; ?>&nbsp;(<?= numberFormatShort($reviewsCount); ?>)</button>
                     <?php else: ?>
                         <span class="review-text"><?= "Yorumlar"; ?>&nbsp;(<?= numberFormatShort($reviewsCount); ?>)</span>
                     <?php endif; ?>
@@ -156,7 +156,7 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default btn-spinner-minus" data-dir="dwn">-</button>
                         </span>
-                    <input type="text" id="input_product_quantity" class="form-control text-center" name="product_quantity" value="1" aria-label="Product quantity">
+                    <input type="text" id="input_product_quantity" class="form-control text-center" name="product_quantity" value="1" aria-label="Ürün Miktarı">
                     <span class="input-group-btn">
                             <button type="button" class="btn btn-default btn-spinner-plus" data-dir="up">+</button>
                         </span>
@@ -205,9 +205,9 @@
 
         <div class="button-container button-container-wishlist">
             <?php if ($isProductInWishlist == 1): ?>
-                <button type="button" class="button-link btn-wishlist btn-add-remove-wishlist" data-product-id="<?= $product->id; ?>" data-type="details"><i class="icon-heart" aria-label="add-remove-wishlist"></i><span><?= "İstek Listesinden Çıkar"; ?></span></button>
+                <button type="button" class="button-link btn-wishlist btn-add-remove-wishlist" data-product-id="<?= $product->id; ?>" data-type="details"><i class="icon-heart" aria-label="istek-listesine-ekle-cikar"></i><span><?= "İstek Listesinden Çıkar"; ?></span></button>
             <?php else: ?>
-                <button type="button" class="button-link btn-wishlist btn-add-remove-wishlist" data-product-id="<?= $product->id; ?>" data-type="details"><i class="icon-heart-o" aria-label="add-remove-wishlist"></i><span><?= "İstek Listesine Ekle"; ?></span></button>
+                <button type="button" class="button-link btn-wishlist btn-add-remove-wishlist" data-product-id="<?= $product->id; ?>" data-type="details"><i class="icon-heart-o" aria-label="istek-listesine-ekle-cikar"></i><span><?= "İstek Listesine Ekle"; ?></span></button>
             <?php endif; ?>
         </div>
     </div>
@@ -285,7 +285,7 @@
                     </button>
                 </div>
             <?php else: ?>
-                <button type="button" data-toggle="modal" data-target="#locationModal" class="nav-link btn-modal-location button-link link-underlined btn-modal-location-product" aria-label="location-modal"><?= "Konum Seç" ?></button>
+                <button type="button" data-toggle="modal" data-target="#locationModal" class="nav-link btn-modal-location button-link link-underlined btn-modal-location-product" aria-label="konum-modal"><?= "Konum Seç" ?></button>
             <?php endif; ?>
         </div>
     <?php endif; ?>

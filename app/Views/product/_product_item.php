@@ -2,7 +2,7 @@
 <div class="product-item">
     <div class="row-custom<?= !empty($imgSecond) ? ' row-img-product-list' : ''; ?>">
         <div class="product-item-options">
-            <button type="button" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?= $product->id; ?>" data-type="list" title="İstek Listesi" aria-label="add-remove-wishlist">
+            <button type="button" class="item-option btn-add-remove-wishlist" data-toggle="tooltip" data-placement="left" data-product-id="<?= $product->id; ?>" data-type="list" title="İstek Listesi" aria-label="istek-listesine-ekle-cikar">
                 <?php if (isProductInWishlist($product) == 1): ?>
                     <i class="icon-heart"></i>
                 <?php else: ?>
@@ -17,7 +17,7 @@
                 <?php else:
                     $itemUniqueID = uniqid();
                     if ($product->stock > 0):?>
-                        <button type="button" id="btn_add_cart_<?= $itemUniqueID; ?>" class="item-option btn-item-add-to-cart" data-id="<?= $itemUniqueID; ?>" data-toggle="tooltip" data-placement="left" data-product-id="<?= $product->id; ?>" data-reload="0" title="Sepete Ekle" aria-label="add-to-cart">
+                        <button type="button" id="btn_add_cart_<?= $itemUniqueID; ?>" class="item-option btn-item-add-to-cart" data-id="<?= $itemUniqueID; ?>" data-toggle="tooltip" data-placement="left" data-product-id="<?= $product->id; ?>" data-reload="0" title="Sepete Ekle" aria-label="sepete-ekle">
                             <i class="icon-cart"></i>
                         </button>
                     <?php endif;
