@@ -13,7 +13,7 @@
                         <span class="date"><?= timeAgo($comment->created_at); ?></span>
                         <?php if (authCheck()):
                             if ($comment->user_id == user()->id): ?>
-                                <button type="button" class="button-link btn-delete-comment" onclick="deleteBlogComment('<?= $comment->id; ?>','<?= $commentPostId; ?>','<?= "Yorumu onayla"; ?>');" aria-label="delete-blog-comment-<?= $comment->id; ?>">&nbsp;<i class="icon-trash"></i>&nbsp;<?= "Sil"; ?></button>
+                                <button type="button" class="button-link btn-delete-comment" onclick="deleteBlogComment('<?= $comment->id; ?>','<?= $commentPostId; ?>','<?= "Yorumu onayla"; ?>');" aria-label="blog-yorumu-sil-<?= $comment->id; ?>">&nbsp;<i class="icon-trash"></i>&nbsp;<?= "Sil"; ?></button>
                             <?php endif;
                         endif; ?>
                     </p>
