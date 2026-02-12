@@ -1,17 +1,15 @@
 <?php $hasMethods = false;
-$showButton = true;
+$showButton = true; // Butonu her zaman göster
 if (!empty($shippingMethods)) {
     foreach ($shippingMethods as $shippingMethod) {
         if (!empty($shippingMethod->methods) && countItems($shippingMethod->methods) > 0) {
             $hasMethods = true;
-        } else {
-            $showButton = false;
         }
+        // Kargo yöntemi yoksa bile butonu göster, $showButton = false yapma
     }
-}
-if ($hasMethods == false):
-    // Kargo yöntemi yoksa mesaj gösterme, direkt devam et
-else: ?>
+} 
+
+if ($hasMethods == true): ?>
     <div class="row">
         <div class="col-12 m-t-60">
             <p class="text-shipping-address"><?= "Kargo Yöntemi"; ?></p>
@@ -73,13 +71,15 @@ else: ?>
             </div>
         <?php endforeach;
     endif;
-    if ($showButton == true): ?>
-        <div class="form-group m-t-60">
-            <a href="<?= generateUrl('cart'); ?>" class="link-underlined link-return-cart"><&nbsp;<?= "Sepete Dön"; ?></a>
-            <button type="submit" name="submit" value="update" class="btn btn-lg btn-custom btn-cart-shipping float-right"><?= "Ödeme yöntemine devam et" ?>&nbsp;&nbsp;<i class="icon-arrow-right m-0"></i></button>
-        </div>
-    <?php endif;
-endif; ?>
+endif; 
+
+// Butonu her zaman göster (kargo yöntemi olsun ya da olmasın)
+if ($showButton == true): ?>
+    <div class="form-group m-t-60">
+        <a href="<?= generateUrl('cart'); ?>" class="link-underlined link-return-cart"><&nbsp;<?= "Sepete Dön"; ?></a>
+        <button type="submit" name="submit" value="update" class="btn btn-lg btn-custom btn-cart-shipping float-right"><?= "Ödeme yöntemine devam et" ?>&nbsp;&nbsp;<i class="icon-arrow-right m-0"></i></button>
+    </div>
+<?php endif; ?>
 
 <?php if (empty($stateId)): ?>
     <div id="cartShippingError" class="m-b-15" style="display: none;">
