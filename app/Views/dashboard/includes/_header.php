@@ -284,14 +284,7 @@
                                 </li>
                             <?php endif;
                         endif;
-                        if ($paymentSettings->cash_on_delivery_enabled == 1): ?>
-                            <li class="nav-cash-on-delivery">
-                                <a href="<?= generateDashUrl('cash_on_delivery'); ?>">
-                                    <i class="fa fa-money"></i>
-                                    <span><?= "Kapıda Ödeme"; ?></span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
+                        <?php /* Kapıda ödeme devre dışı bırakıldı */ ?>
                         <li class="header"><?= "Ödemeler"; ?></li>
                         <li class="treeview<?php isAdminNavActive(['payments']); ?>">
                             <a href="#">

@@ -209,7 +209,7 @@ endif; ?>
 <button type="button" class="btn btn-md btn-block" aria-label="close" onclick="hideCookiesWarning();"><?= "Çerezleri Kabul Et"; ?></button>
 </div>
 <?php endif; ?>
-<button type="button" class="scrollup" aria-label="scroll-up"><i class="icon-arrow-up"></i></button>
+<button type="button" class="scrollup" aria-label="yukari-kaydir"><i class="icon-arrow-up"></i></button>
 <script src="<?= base_url('assets/js/jquery-3.5.1.min.js'); ?>"></script>
 <script src="<?= base_url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 <script src="<?= base_url('assets/js/plugins-2.5.js'); ?>"></script>

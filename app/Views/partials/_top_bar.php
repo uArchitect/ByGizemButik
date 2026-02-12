@@ -22,7 +22,7 @@ endif; ?>
 <ul class="navbar-nav clearfix">
 <?php if ($generalSettings->location_search_header == 1 && countItems($activeCountries) > 0): ?>
 <li class="nav-item">
-<button type="button" data-toggle="modal" data-target="#locationModal" class="nav-link btn-modal-location button-link btn-modal-location-header display-flex align-items-center" aria-label="location-modal">
+<button type="button" data-toggle="modal" data-target="#locationModal" class="nav-link btn-modal-location button-link btn-modal-location-header display-flex align-items-center" aria-label="konum-modal">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="#888888">
 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
 </svg>&nbsp;<?= !empty($baseVars->defaultLocationInput) ? $baseVars->defaultLocationInput : "Konum"; ?>
@@ -38,7 +38,7 @@ endif; ?>
 <?php endif;
 if ($paymentSettings->currency_converter == 1 && !empty($currencies)): ?>
 <li class="nav-item dropdown top-menu-dropdown">
-<button type="button" class="nav-link dropdown-toggle button-link" data-toggle="dropdown" aria-label="select-currency">
+<button type="button" class="nav-link dropdown-toggle button-link" data-toggle="dropdown" aria-label="para-birimi-sec">
 <?= getSelectedCurrency()->code; ?>&nbsp;(<?= getSelectedCurrency()->symbol; ?>)&nbsp;<i class="icon-arrow-down"></i>
 </button>
 <form action="<?= base_url('set-selected-currency-post'); ?>" method="post">
@@ -57,7 +57,7 @@ endforeach; ?>
 <?php endif; ?>
 <?php if ($generalSettings->multilingual_system == 1 && countItems($activeLanguages) > 1): ?>
 <li class="nav-item dropdown top-menu-dropdown">
-<button type="button" class="nav-link dropdown-toggle button-link" data-toggle="dropdown" aria-label="select-flag">
+<button type="button" class="nav-link dropdown-toggle button-link" data-toggle="dropdown" aria-label="dil-sec">
 <img src="<?= base_url($activeLang->flag_path); ?>" class="flag" style="width: 18px; height: auto;" alt="<?= esc($activeLang->name)." Aktif" ; ?>"><?= esc($activeLang->name); ?>&nbsp;<i class="icon-arrow-down"></i>
 </button>
 <ul class="dropdown-menu dropdown-menu-lang">
@@ -73,7 +73,7 @@ endforeach; ?>
 <?php endif;
 if (authCheck()): ?>
 <li class="nav-item dropdown profile-dropdown p-r-0">
-<button type="button" class="nav-link dropdown-toggle a-profile button-link" data-toggle="dropdown" aria-expanded="false" aria-label="select-language">
+<button type="button" class="nav-link dropdown-toggle a-profile button-link" data-toggle="dropdown" aria-expanded="false" aria-label="profil-menu">
 <img src="<?= getUserAvatar(user()); ?>" alt="<?= esc(getUsername(user())); ?>" width="26" height="26">
 <?= characterLimiter(esc(getUsername(user())), 15, '..'); ?>
 <i class="icon-arrow-down"></i>
@@ -175,7 +175,7 @@ d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32
 <form action="<?= base_url('logout'); ?>" method="post" class="form-logout">
 <?= csrf_field(); ?>
 <input type="hidden" name="back_url" value="<?= getCurrentUrl(); ?>">
-<button type="submit" class="btn-logout" aria-label="btn-logout">
+<button type="submit" class="btn-logout" aria-label="cikis-yap">
 <div class="icon">
 <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#747474" viewBox="0 0 256 256">
 <path d="M120,216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H56V208h56A8,8,0,0,1,120,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L204.69,120H112a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,229.66,122.34Z"></path>
@@ -188,7 +188,7 @@ d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32
 </li>
 <?php else: ?>
 <li class="nav-item">
-<button type="button" data-toggle="modal" data-target="#loginModal" class="nav-link button-link" aria-label="login">Giriş Yap</button>
+<button type="button" data-toggle="modal" data-target="#loginModal" class="nav-link button-link" aria-label="giris-yap">Giriş Yap</button>
 <span class="auth-sep">/</span>
 <a href="<?= generateUrl('register'); ?>" class="nav-link">Kayıt Ol</a>
 </li>

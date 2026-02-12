@@ -52,27 +52,6 @@
                                                     </div>
                                                 </div>
                                                 <?php endif; ?>
-                                                <div class="form-group">
-                                                    <div class="payment-option-single">
-                                                        <div class="option-payment">
-                                                            <div class="custom-control custom-radio">
-                                                                <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required <?= (empty($paytrGateway) || $paytrGateway->status != 1) ? 'checked' : ''; ?>>
-                                                                <label class="custom-control-label label-payment-option font-600" for="option_cash_on_delivery">
-                                                                    <div class="payment-option-content">
-                                                                        <div class="payment-icon">
-                                                                            <span style="font-size: 24px;">🚚</span>
-                                                                        </div>
-                                                                        <div class="payment-details">
-                                                                            <strong><?= "Kapıda Ödeme"; ?></strong>
-                                                                            <p class="payment-description"><?= "Siparişinizi teslim alırken nakit olarak ödeyebilirsiniz"; ?></p>
-                                                                            <small class="text-muted"><?= "Güvenli ve kolay ödeme yöntemi"; ?></small>
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="form-group m-t-30 text-center">
                                                     <button type="submit" name="submit" value="update" class="btn btn-lg btn-success btn-continue-payment" style="padding: 15px 40px; font-size: 16px; border-radius: 25px;">
                                                         <i class="fa fa-arrow-right" style="margin-right: 8px;"></i>

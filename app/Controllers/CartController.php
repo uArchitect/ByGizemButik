@@ -293,18 +293,6 @@ class CartController extends BaseController
                 return redirect()->to(generateUrl('cart'));
             }
             $this->cartModel->validateCart();
-            $data['vendorCashOnDelivery'] = 0;
-            //sale payment
-            if (!empty($data['cartItems'])) {
-                foreach ($data['cartItems'] as $item) {
-                    $vendor = getUser($item->seller_id);
-                    if (!empty($vendor)) {
-                        if ($vendor->cash_on_delivery == 1 && $vendor->commission_debt < $this->paymentSettings->cash_on_delivery_debt_limit) {
-                            $data['vendorCashOnDelivery'] = 1;
-                        }
-                    }
-                }
-            }
             $data['mdsPaymentType'] = 'sale';
             if ($data['cartItems'] == null) {
                 return redirect()->to(generateUrl('cart'));
@@ -369,22 +357,6 @@ class CartController extends BaseController
         if ($this->paymentSettings->pay_with_wallet_balance == 1) {
             array_push($arrayMethods, 'wallet_balance');
         }
-        //check vendor enabled cash on delivery
-        $vendorCashOnDelivery = 0;
-        $cartItems = $this->cartModel->getSessCartItems();
-        if (!empty($cartItems)) {
-            foreach ($cartItems as $item) {
-                $vendor = getUser($item->seller_id);
-                if (!empty($vendor)) {
-                    if ($vendor->cash_on_delivery == 1 && $vendor->commission_debt < $this->paymentSettings->cash_on_delivery_debt_limit) {
-                        $vendorCashOnDelivery = 1;
-                    }
-                }
-            }
-        }
-        if ($this->paymentSettings->cash_on_delivery_enabled && $mdsPaymentType == 'sale' && $vendorCashOnDelivery == 1 && empty($this->cartModel->checkCartHasDigitalProduct())) {
-            array_push($arrayMethods, 'cash_on_delivery');
-        }
         $paymentOption = inputPost('payment_option');
         if (!in_array($paymentOption, $arrayMethods)) {
             setErrorMessage(trans("msg_error"));
@@ -431,12 +403,8 @@ class CartController extends BaseController
         }
         if ($paymentType == 'sale') {
             $this->cartModel->validateCart();
-            $includeFees = true;
-            if (!empty($data['cartPaymentMethod']) && !empty($data['cartPaymentMethod']->payment_option) && $data['cartPaymentMethod']->payment_option == 'cash_on_delivery') {
-                $includeFees = false;
-            }
             //sale payment
-            $data['cartItems'] = $this->cartModel->getSessCartItems(true, $includeFees);
+            $data['cartItems'] = $this->cartModel->getSessCartItems(true, true);
             if ($data['cartItems'] == null) {
                 return redirect()->to(generateUrl('cart'));
             }

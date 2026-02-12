@@ -38,9 +38,15 @@
         $ip = '127.0.0.1';
     }
 
+    // Dil bilgisini güvenli şekilde al
+    $langShort = 'tr';
+    if (isset($activeLang) && !empty($activeLang->short_form)) {
+        $langShort = $activeLang->short_form;
+    }
+
     // Merchant OK ve Fail URL'leri
-    $merchantOkUrl = base_url() . '/paytr-payment-post?status=success&payment_type=' . $mdsPaymentType . '&lang=' . $activeLang->short_form . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
-    $merchantFailUrl = base_url() . '/paytr-payment-post?status=failed&payment_type=' . $mdsPaymentType . '&lang=' . $activeLang->short_form . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
+    $merchantOkUrl = base_url() . '/paytr-payment-post?status=success&payment_type=' . $mdsPaymentType . '&lang=' . $langShort . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
+    $merchantFailUrl = base_url() . '/paytr-payment-post?status=failed&payment_type=' . $mdsPaymentType . '&lang=' . $langShort . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
     $notificationUrl = base_url() . '/mds-paytr-notification';
 
     // Ödeme bilgileri
@@ -95,5 +101,13 @@
             </div>
         </div>
     <?php endif;
-endif;
+else: ?>
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <strong>Hata!</strong> Ödeme yöntemi yüklenemedi. Lütfen geri dönüp tekrar deneyin.
+            </div>
+        </div>
+    </div>
+<?php endif;
 resetFlashData(); ?>

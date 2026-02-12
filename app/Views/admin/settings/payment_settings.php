@@ -27,7 +27,6 @@ $stripeLocales = ['auto' => 'Auto', 'ar' => 'Arabic', 'bg' => 'Bulgarian (Bulgar
                         <?php endforeach;
                     endif; ?>
                     <li class="<?= $activeTab == 'bank_transfer' ? ' active' : ''; ?>"><a href="<?= adminUrl('payment-settings'); ?>?gateway=bank_transfer">Banka Havalesi</a></li>
-                    <li class="<?= $activeTab == 'cash_on_delivery' ? ' active' : ''; ?>"><a href="<?= adminUrl('payment-settings'); ?>?gateway=cash_on_delivery">Kapıda Ödeme</a></li>
                 </ul>
                 <form action="<?= base_url('Admin/paymentGatewaySettingsPost'); ?>" method="post">
                     <?= csrf_field(); ?>
@@ -464,22 +463,7 @@ $stripeLocales = ['auto' => 'Auto', 'ar' => 'Arabic', 'bg' => 'Bulgarian (Bulgar
                             <?php endif; ?>
                         </div>
 
-                        <div class="tab-pane<?= $activeTab == 'cash_on_delivery' ? ' active' : ''; ?>">
-                            <?php if ($activeTab == 'cash_on_delivery'): ?>
-                                <input type="hidden" name="name_key" value="cash_on_delivery">
-                                <div class="form-group">
-                                    <label>Durum</label>
-                                    <?= formRadio('cash_on_delivery_enabled', 1, 0, "Etkin", "Devre Dışı", $paymentSettings->cash_on_delivery_enabled, 'col-md-4'); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label"><?= "Komisyon Borç Limiti"; ?></label>
-                                    <div class="input-group max-400">
-                                        <span class="input-group-addon"><?= esc($defaultCurrency->code); ?></span>
-                                        <input type="text" name="cash_on_delivery_debt_limit" class="form-control form-input price-input" value="<?= getPrice($paymentSettings->cash_on_delivery_debt_limit, 'input'); ?>" placeholder="0.00" onpaste="return false;" maxlength="32" required>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                        <!-- Kapıda ödeme devre dışı bırakıldı -->
                     </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary pull-right"><?= "Değişiklikleri Kaydet"; ?></button>

@@ -66,10 +66,18 @@
                                             if (!empty($cartPaymentMethod->payment_option)) {
                                                 $data['paymentGateway'] = getPaymentGateway($cartPaymentMethod->payment_option);
                                             }
+                                            //Subview'ler için gerekli değişkenleri ekle
+                                            if (isset($cartItems)) {
+                                                $data['cartItems'] = $cartItems;
+                                            }
+                                            if (isset($activeLang)) {
+                                                $data['activeLang'] = $activeLang;
+                                            }
+                                            if (isset($cartHasPhysicalProduct)) {
+                                                $data['cartHasPhysicalProduct'] = $cartHasPhysicalProduct;
+                                            }
                                             if ($cartPaymentMethod->payment_option == 'bank_transfer') {
                                                 echo view('cart/payment_methods/_bank_transfer', $data);
-                                            } elseif (authCheck() && $cartPaymentMethod->payment_option == 'cash_on_delivery') {
-                                                echo view('cart/payment_methods/_cash_on_delivery', $data);
                                             } else {
                                                 try {
                                                     $sessData = new stdClass();
@@ -83,7 +91,9 @@
                                                         redirectToBackUrl(generateUrl('cart', 'payment_method'));
                                                     }
                                                     echo view('cart/payment_methods/_' . $cartPaymentMethod->payment_option, $data);
-                                                } catch (Exception $e) {
+                                                } catch (\Throwable $e) {
+                                                    setErrorMessage('Ödeme yüklenirken hata oluştu: ' . $e->getMessage());
+                                                    echo view('partials/_messages');
                                                 }
                                             } ?>
                                         </div>
