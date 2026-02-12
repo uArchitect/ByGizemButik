@@ -49,8 +49,7 @@ class Paytr
         $no_installment  = isset($data['no_installment']) ? $data['no_installment'] : 0;
         $max_installment = isset($data['max_installment']) ? $data['max_installment'] : 0;
         $currency        = 'TL';
-        // force_test_mode parametresi varsa test modunu zorla
-        $test_mode       = !empty($data['force_test_mode']) ? '1' : ($this->testMode ? '1' : '0');
+        $test_mode       = $this->testMode ? '1' : '0';
 
         $user_name       = !empty($data['user_name']) ? $data['user_name'] : 'Misafir';
         $user_address    = !empty($data['user_address']) ? $data['user_address'] : 'Belirtilmedi';
@@ -110,16 +109,17 @@ class Paytr
             'merchant_fail_url' => $merchant_fail_url,
         ];
 
-        ## cURL isteği - PayTR resmi örneğine göre ##
+        ## cURL isteği - Content-Type: application/x-www-form-urlencoded ##
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://www.paytr.com/odeme/api/get-token');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vals);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_vals));
         curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 90);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 
         $result = curl_exec($ch);
 

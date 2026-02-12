@@ -73,8 +73,7 @@
     $paytrSession->currency = $currency;
     helperSetSession('mds_paytr_data', $paytrSession);
 
-    // Token oluştur - önce test modunu dene
-    $paymentData['force_test_mode'] = true;
+    // Token oluştur
     $tokenResponse = $paytrLib->createToken($paymentData);
 
     if (!empty($tokenResponse) && isset($tokenResponse['status']) && $tokenResponse['status'] == 'success' && !empty($tokenResponse['token'])):
