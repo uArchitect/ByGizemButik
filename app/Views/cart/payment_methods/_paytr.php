@@ -21,7 +21,7 @@
             foreach ($cartItems as $item) {
                 $basket[] = [
                     !empty($item->product_title) ? $item->product_title : 'Urun',
-                    number_format($item->price, 2, '.', ''),
+                    number_format($item->total_price, 2, '.', ''),
                     $item->quantity
                 ];
             }
