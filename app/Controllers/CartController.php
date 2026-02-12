@@ -275,10 +275,10 @@ class CartController extends BaseController
         if ($paymentType != 'service') {
             $paymentType = 'sale';
         }
-        //check customer location
+        //check customer location (kargo aktifse kontrol et)
         $this->cartModel->setCartCustomerLocation();
         $customerLocation = $this->cartModel->getCartCustomerLocation();
-        if (empty($customerLocation->countryId) || empty($customerLocation->stateId)) {
+        if ($this->productSettings->marketplace_shipping == 1 && (empty($customerLocation->countryId) || empty($customerLocation->stateId))) {
             setErrorMessage(trans("msg_cart_select_location"));
             return redirect()->to(generateUrl("settings", "location") . '?payment_type=' . $paymentType);
         }
@@ -408,7 +408,7 @@ class CartController extends BaseController
     public function payment()
     {
         $customerLocation = $this->cartModel->getCartCustomerLocation();
-        if (empty($customerLocation->countryId) || empty($customerLocation->stateId)) {
+        if ($this->productSettings->marketplace_shipping == 1 && (empty($customerLocation->countryId) || empty($customerLocation->stateId))) {
             return redirect()->to(generateUrl('cart', 'payment_method'));
         }
         $data['title'] = trans("shopping_cart");
