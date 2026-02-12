@@ -43,6 +43,7 @@ class Paytr
         $userPhone = !empty($data['user_phone']) ? $data['user_phone'] : 'Belirtilmedi';
         $merchantOkUrl = $data['merchant_ok_url'];
         $merchantFailUrl = $data['merchant_fail_url'];
+        $notificationUrl = $data['notification_url'];
         $userBasket = base64_encode(json_encode($data['basket']));
         $userIp = $data['user_ip'];
         $timeoutLimit = 30;
@@ -74,6 +75,7 @@ class Paytr
             'user_phone' => $userPhone,
             'merchant_ok_url' => $merchantOkUrl,
             'merchant_fail_url' => $merchantFailUrl,
+            'notification_url' => $notificationUrl,
             'timeout_limit' => $timeoutLimit,
             'currency' => $currency,
             'test_mode' => $testMode,
@@ -92,10 +94,11 @@ class Paytr
         $result = curl_exec($ch);
 
         if (curl_errno($ch)) {
+            $errorMsg = curl_error($ch);
             curl_close($ch);
             return [
                 'status' => 'error',
-                'reason' => 'cURL Error: ' . curl_error($ch)
+                'reason' => 'cURL Error: ' . $errorMsg
             ];
         }
 

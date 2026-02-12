@@ -41,6 +41,7 @@
     // Merchant OK ve Fail URL'leri
     $merchantOkUrl = base_url() . '/paytr-payment-post?status=success&payment_type=' . $mdsPaymentType . '&lang=' . $activeLang->short_form . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
     $merchantFailUrl = base_url() . '/paytr-payment-post?status=failed&payment_type=' . $mdsPaymentType . '&lang=' . $activeLang->short_form . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
+    $notificationUrl = base_url() . '/mds-paytr-notification';
 
     // Ödeme bilgileri
     $paymentData = [
@@ -54,6 +55,7 @@
         'user_ip' => $ip,
         'merchant_ok_url' => $merchantOkUrl,
         'merchant_fail_url' => $merchantFailUrl,
+        'notification_url' => $notificationUrl,
         'no_installment' => 0,
         'max_installment' => 0,
         'lang' => 'tr',

@@ -28,11 +28,35 @@
                                         <input type="hidden" name="mds_payment_type" value="<?= esc($mdsPaymentType); ?>">
                                         <div class="row">
                                             <div class="col-12">
+                                                <?php $paytrGateway = getPaymentGateway('paytr');
+                                                if (!empty($paytrGateway) && $paytrGateway->status == 1): ?>
+                                                <div class="form-group">
+                                                    <div class="payment-option-single payment-option-paytr">
+                                                        <div class="option-payment">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="option_paytr" name="payment_option" value="paytr" required checked>
+                                                                <label class="custom-control-label label-payment-option font-600" for="option_paytr">
+                                                                    <div class="payment-option-content">
+                                                                        <div class="payment-icon payment-icon-card">
+                                                                            <i class="fa fa-credit-card" style="font-size: 22px;"></i>
+                                                                        </div>
+                                                                        <div class="payment-details">
+                                                                            <strong><?= "Kredi / Banka Kartı"; ?></strong>
+                                                                            <p class="payment-description"><?= "Kredi kartı veya banka kartınızla güvenli ödeme yapın"; ?></p>
+                                                                            <small class="text-muted"><?= "256-bit SSL ile korunan güvenli ödeme"; ?></small>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php endif; ?>
                                                 <div class="form-group">
                                                     <div class="payment-option-single">
                                                         <div class="option-payment">
                                                             <div class="custom-control custom-radio">
-                                                                <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required checked>
+                                                                <input type="radio" class="custom-control-input" id="option_cash_on_delivery" name="payment_option" value="cash_on_delivery" required <?= (empty($paytrGateway) || $paytrGateway->status != 1) ? 'checked' : ''; ?>>
                                                                 <label class="custom-control-label label-payment-option font-600" for="option_cash_on_delivery">
                                                                     <div class="payment-option-content">
                                                                         <div class="payment-icon">
@@ -51,8 +75,8 @@
                                                 </div>
                                                 <div class="form-group m-t-30 text-center">
                                                     <button type="submit" name="submit" value="update" class="btn btn-lg btn-success btn-continue-payment" style="padding: 15px 40px; font-size: 16px; border-radius: 25px;">
-                                                        <i class="fa fa-credit-card" style="margin-right: 8px;"></i>
-                                                        <?= "Kapıda Ödeme ile Devam Et" ?>
+                                                        <i class="fa fa-arrow-right" style="margin-right: 8px;"></i>
+                                                        <?= "Ödemeye Devam Et" ?>
                                                         <i class="fa fa-arrow-right" style="margin-left: 8px;"></i>
                                                     </button>
                                                 </div>
@@ -86,10 +110,21 @@
 <style>
 .payment-option-single {
     background: #f8f9fa;
-    border: 2px solid #28a745;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
     margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-option-single:hover {
+    border-color: #007bff;
+    background: #f0f7ff;
+}
+
+.payment-icon-card {
+    background: #0066cc !important;
 }
 
 .payment-option-content {
@@ -139,16 +174,21 @@
 }
 
 .custom-control-input:checked ~ .custom-control-label .payment-option-single {
-    border-color: #007bff;
+    border-color: #007bff !important;
     background: #e3f2fd;
 }
 
 .custom-control-input:checked ~ .custom-control-label .payment-icon {
-    background: #007bff;
+    background: #007bff !important;
 }
 
 .custom-control-input:checked ~ .custom-control-label .payment-details strong {
     color: #007bff;
+}
+
+.custom-control-label {
+    width: 100%;
+    cursor: pointer;
 }
 
 .btn-continue-payment {
