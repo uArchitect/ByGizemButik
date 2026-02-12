@@ -3,6 +3,7 @@
 /**
  * PayTR iFrame API Library
  * PayTR iFrame API Entegrasyonu için kütüphane
+ * Referans: https://dev.paytr.com/iframe-api/iframe-api-1-adim
  */
 class Paytr
 {
@@ -11,108 +12,113 @@ class Paytr
     private $merchantSalt;
     private $testMode;
 
-    /**
-     * Constructor
-     *
-     * @param object $paytrGateway - Veritabanından gelen gateway bilgisi
-     */
     public function __construct($paytrGateway)
     {
         if (!empty($paytrGateway)) {
-            $this->merchantId = $paytrGateway->public_key;
-            $this->merchantKey = $paytrGateway->secret_key;
-            $this->merchantSalt = !empty($paytrGateway->merchant_salt) ? $paytrGateway->merchant_salt : '';
+            $this->merchantId = trim($paytrGateway->public_key);
+            $this->merchantKey = trim($paytrGateway->secret_key);
+            $this->merchantSalt = !empty($paytrGateway->merchant_salt) ? trim($paytrGateway->merchant_salt) : '';
             $this->testMode = ($paytrGateway->environment == 'sandbox');
         }
     }
 
     /**
-     * Token Oluşturma
-     * PayTR iFrame API için token oluşturur
-     *
-     * @param array $data - Ödeme bilgileri
-     * @return array - Token yanıtı
+     * PayTR iFrame API Token Oluşturma
+     * Referans: https://dev.paytr.com/iframe-api/iframe-api-1-adim
      */
     public function createToken($data)
     {
-        // Gerekli bilgilerin kontrolü
         if (empty($this->merchantId) || empty($this->merchantKey) || empty($this->merchantSalt)) {
             return [
                 'status' => 'error',
-                'reason' => 'PayTR bilgileri eksik! Lütfen admin panelinden PayTR ayarlarını kontrol edin.'
+                'reason' => 'PayTR bilgileri eksik!'
             ];
         }
 
-        $merchantOid = $data['merchant_oid'];
-        $email = $data['email'];
-        $paymentAmount = intval(round($data['amount'] * 100));
-        $userName = $data['user_name'];
-        $userAddress = !empty($data['user_address']) ? $data['user_address'] : 'Belirtilmedi';
-        $userPhone = !empty($data['user_phone']) ? $data['user_phone'] : 'Belirtilmedi';
-        $merchantOkUrl = $data['merchant_ok_url'];
-        $merchantFailUrl = $data['merchant_fail_url'];
-        $notificationUrl = $data['notification_url'];
-        $userBasket = base64_encode(json_encode($data['basket']));
-        $userIp = $data['user_ip'];
-        $timeoutLimit = 30;
-        $debugOn = 1;
-        $testMode = $this->testMode ? '1' : '0';
-        $noInstallment = isset($data['no_installment']) ? $data['no_installment'] : 0;
-        $maxInstallment = isset($data['max_installment']) ? $data['max_installment'] : 0;
-        $currency = 'TL';
-        $lang = isset($data['lang']) ? $data['lang'] : 'tr';
+        ## Zorunlu alanlar ##
+        $merchant_id    = $this->merchantId;
+        $merchant_key   = $this->merchantKey;
+        $merchant_salt  = $this->merchantSalt;
 
-        // PayTR iFrame API hash hesaplama
-        $hashStr = $this->merchantId . $userIp . $merchantOid . $email . $paymentAmount .
-            $userBasket . $noInstallment . $maxInstallment . $currency . $testMode;
-        $paytrToken = base64_encode(hash_hmac('sha256', $hashStr . $this->merchantSalt, $this->merchantKey, true));
+        $user_ip        = $data['user_ip'];
+        $merchant_oid   = $data['merchant_oid'];
+        $email          = $data['email'];
+        $payment_amount = intval(round($data['amount'] * 100)); // kuruş cinsinden
+        $user_basket    = base64_encode(json_encode($data['basket']));
 
-        $postVals = [
-            'merchant_id' => $this->merchantId,
-            'user_ip' => $userIp,
-            'merchant_oid' => $merchantOid,
-            'email' => $email,
-            'payment_amount' => $paymentAmount,
-            'paytr_token' => $paytrToken,
-            'user_basket' => $userBasket,
-            'debug_on' => $debugOn,
-            'no_installment' => $noInstallment,
-            'max_installment' => $maxInstallment,
-            'user_name' => $userName,
-            'user_address' => $userAddress,
-            'user_phone' => $userPhone,
-            'merchant_ok_url' => $merchantOkUrl,
-            'merchant_fail_url' => $merchantFailUrl,
-            'notification_url' => $notificationUrl,
-            'timeout_limit' => $timeoutLimit,
-            'currency' => $currency,
-            'test_mode' => $testMode,
-            'lang' => $lang,
-        ];
+        $no_installment  = isset($data['no_installment']) ? $data['no_installment'] : 0;
+        $max_installment = isset($data['max_installment']) ? $data['max_installment'] : 0;
+        $currency        = 'TL';
+        $test_mode       = $this->testMode ? '1' : '0';
 
-        // Debug log
+        $user_name       = !empty($data['user_name']) ? $data['user_name'] : 'Misafir';
+        $user_address    = !empty($data['user_address']) ? $data['user_address'] : 'Belirtilmedi';
+        $user_phone      = !empty($data['user_phone']) ? $data['user_phone'] : '05555555555';
+        $merchant_ok_url = $data['merchant_ok_url'];
+        $merchant_fail_url = $data['merchant_fail_url'];
+        $timeout_limit   = 30;
+        $debug_on        = 1;
+        $lang            = isset($data['lang']) ? $data['lang'] : 'tr';
+
+        ## Token hesaplama - PayTR resmi dokümantasyona göre ##
+        $hash_str = $merchant_id . $user_ip . $merchant_oid . $email . $payment_amount .
+            $user_basket . $no_installment . $max_installment . $currency . $test_mode;
+        $paytr_token = base64_encode(hash_hmac('sha256', $hash_str . $merchant_salt, $merchant_key, true));
+
+        ## POST değerleri - PayTR resmi örneğine göre ##
+        $post_vals = array(
+            'merchant_id'      => $merchant_id,
+            'user_ip'          => $user_ip,
+            'merchant_oid'     => $merchant_oid,
+            'email'            => $email,
+            'payment_amount'   => $payment_amount,
+            'paytr_token'      => $paytr_token,
+            'user_basket'      => $user_basket,
+            'debug_on'         => $debug_on,
+            'no_installment'   => $no_installment,
+            'max_installment'  => $max_installment,
+            'user_name'        => $user_name,
+            'user_address'     => $user_address,
+            'user_phone'       => $user_phone,
+            'merchant_ok_url'  => $merchant_ok_url,
+            'merchant_fail_url'=> $merchant_fail_url,
+            'timeout_limit'    => $timeout_limit,
+            'currency'         => $currency,
+            'test_mode'        => $test_mode,
+            'lang'             => $lang,
+        );
+
+        ## Debug log ##
         $debugLog = [
-            'time' => date('Y-m-d H:i:s'),
-            'merchant_id' => $this->merchantId,
-            'merchant_oid' => $merchantOid,
-            'payment_amount' => $paymentAmount,
-            'email' => $email,
-            'user_ip' => $userIp,
-            'test_mode' => $testMode,
-            'currency' => $currency,
-            'merchant_ok_url' => $merchantOkUrl,
-            'merchant_fail_url' => $merchantFailUrl,
-            'notification_url' => $notificationUrl,
+            'time'            => date('Y-m-d H:i:s'),
+            'merchant_id'     => $merchant_id,
+            'merchant_key_3'  => substr($merchant_key, 0, 3) . '***',
+            'merchant_salt_3' => substr($merchant_salt, 0, 3) . '***',
+            'user_ip'         => $user_ip,
+            'merchant_oid'    => $merchant_oid,
+            'email'           => $email,
+            'payment_amount'  => $payment_amount,
+            'no_installment'  => $no_installment,
+            'max_installment' => $max_installment,
+            'currency'        => $currency,
+            'test_mode'       => $test_mode,
+            'user_basket_len' => strlen($user_basket),
+            'hash_str_len'    => strlen($hash_str),
+            'paytr_token_len' => strlen($paytr_token),
+            'merchant_ok_url' => $merchant_ok_url,
+            'merchant_fail_url' => $merchant_fail_url,
         ];
 
+        ## cURL isteği - PayTR resmi örneğine göre ##
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://www.paytr.com/odeme/api/get-token');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postVals));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vals);
         curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
         $result = curl_exec($ch);
 
@@ -146,10 +152,6 @@ class Paytr
 
     /**
      * Callback Hash Doğrulama
-     * PayTR bildirim callback'ini doğrular
-     *
-     * @param array $post - PayTR'den gelen POST verileri
-     * @return bool - Hash geçerli mi
      */
     public function verifyCallback($post)
     {
@@ -158,17 +160,11 @@ class Paytr
             $this->merchantKey,
             true
         ));
-
         return ($hash == $post['hash']);
     }
 
     /**
      * Statik hash doğrulama (Common.php'den kullanım için)
-     *
-     * @param array $post
-     * @param string $merchantKey
-     * @param string $merchantSalt
-     * @return bool
      */
     public static function verifyCallbackStatic($post, $merchantKey, $merchantSalt)
     {
@@ -177,13 +173,9 @@ class Paytr
             $merchantKey,
             true
         ));
-
         return ($hash == $post['hash']);
     }
 
-    /**
-     * Test Modu Kontrolü
-     */
     public function isTestMode()
     {
         return $this->testMode;

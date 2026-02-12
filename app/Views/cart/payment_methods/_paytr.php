@@ -47,21 +47,18 @@
     // Merchant OK ve Fail URL'leri
     $merchantOkUrl = base_url() . '/paytr-payment-post?status=success&payment_type=' . $mdsPaymentType . '&lang=' . $langShort . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
     $merchantFailUrl = base_url() . '/paytr-payment-post?status=failed&payment_type=' . $mdsPaymentType . '&lang=' . $langShort . '&merchant_oid=' . $merchantOid . '&mds_token=' . $mdsPaymentToken;
-    $notificationUrl = base_url() . '/mds-paytr-notification';
-
-    // Ödeme bilgileri
+    // Ödeme bilgileri - PayTR resmi iFrame API dokümantasyonuna göre
     $paymentData = [
-        'email' => !empty($customer->email) ? $customer->email : 'unknown@domain.com',
+        'email' => !empty($customer->email) ? $customer->email : 'musteri@bygizembutik.com',
         'amount' => $totalAmount,
         'merchant_oid' => $merchantOid,
         'user_name' => trim(($customer->first_name ?? '') . ' ' . ($customer->last_name ?? '')),
-        'user_address' => '',
-        'user_phone' => $customer->phone_number ?? '',
+        'user_address' => !empty($customer->address) ? $customer->address : 'Turkiye',
+        'user_phone' => !empty($customer->phone_number) ? $customer->phone_number : '05555555555',
         'basket' => $basket,
         'user_ip' => $ip,
         'merchant_ok_url' => $merchantOkUrl,
         'merchant_fail_url' => $merchantFailUrl,
-        'notification_url' => $notificationUrl,
         'no_installment' => 0,
         'max_installment' => 0,
         'lang' => 'tr',
