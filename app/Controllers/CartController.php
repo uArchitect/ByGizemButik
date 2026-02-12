@@ -484,7 +484,7 @@ class CartController extends BaseController
     {
         $paypal = getPaymentGateway('paypal');
         if (empty($paypal)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             echo json_encode([
                 'result' => 0
             ]);
@@ -533,7 +533,7 @@ class CartController extends BaseController
     {
         $stripe = getPaymentGateway('stripe');
         if (empty($stripe)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             echo json_encode([
                 'result' => 0
             ]);
@@ -591,7 +591,7 @@ class CartController extends BaseController
     {
         $paystack = getPaymentGateway('paystack');
         if (empty($paystack)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             echo json_encode([
                 'result' => 0
             ]);
@@ -607,7 +607,7 @@ class CartController extends BaseController
             'payment_status' => inputPost('payment_status'),
         ];
         if (empty($paystackLib->verifyTransaction($dataTransaction['payment_id']))) {
-            setErrorMessage('Invalid transaction code!');
+            setErrorMessage('Geçersiz işlem kodu!');
             echo json_encode([
                 'result' => 0
             ]);
@@ -638,7 +638,7 @@ class CartController extends BaseController
     {
         $razorpay = getPaymentGateway('razorpay');
         if (empty($razorpay)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             echo json_encode([
                 'result' => 0
             ]);
@@ -656,7 +656,7 @@ class CartController extends BaseController
             'payment_status' => 'Succeeded',
         ];
         if (empty($razorpayLib->verifyPaymentSignature($dataTransaction))) {
-            setErrorMessage('Invalid signature passed!');
+            setErrorMessage('Geçersiz imza gönderildi!');
             echo json_encode([
                 'result' => 0
             ]);
@@ -687,7 +687,7 @@ class CartController extends BaseController
     {
         $flutterwave = getPaymentGateway('flutterwave');
         if (empty($flutterwave)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             $this->redirectBackToPayment();
         }
         $paymentSession = helperGetSession('mds_payment_cart_data');
@@ -752,7 +752,7 @@ class CartController extends BaseController
         }
         $iyzico = getPaymentGateway('iyzico');
         if (empty($iyzico)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             $this->redirectBackToPayment($langBaseUrl);
         }
         $paymentSession = helperGetSession('mds_payment_cart_data');
@@ -812,7 +812,7 @@ class CartController extends BaseController
 
         $paytr = getPaymentGateway('paytr');
         if (empty($paytr)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             $this->redirectBackToPayment($langBaseUrl);
         }
 
@@ -917,7 +917,7 @@ class CartController extends BaseController
     {
         $midtrans = getPaymentGateway('midtrans');
         if (empty($midtrans)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             echo json_encode([
                 'result' => 0
             ]);
@@ -991,7 +991,7 @@ class CartController extends BaseController
         }
         $mercadoPago = getPaymentGateway('mercado_pago');
         if (empty($mercadoPago)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             $this->redirectBackToPayment($langBaseUrl);
         }
         $paymentSession = helperGetSession('mds_payment_cart_data');
@@ -1041,7 +1041,7 @@ class CartController extends BaseController
         //check paytabs
         $payTabs = getPaymentGateway('paytabs');
         if (empty($payTabs)) {
-            setErrorMessage("Payment method not found!");
+            setErrorMessage("Ödeme yöntemi bulunamadı!");
             $this->redirectBackToPayment($langBaseUrl);
         }
         //get post data
