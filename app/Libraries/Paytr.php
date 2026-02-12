@@ -109,7 +109,7 @@ class Paytr
         curl_setopt($ch, CURLOPT_URL, 'https://www.paytr.com/odeme/api/get-token');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postVals);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postVals));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 20);
