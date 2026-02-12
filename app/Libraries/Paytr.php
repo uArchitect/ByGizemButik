@@ -49,7 +49,8 @@ class Paytr
         $no_installment  = isset($data['no_installment']) ? $data['no_installment'] : 0;
         $max_installment = isset($data['max_installment']) ? $data['max_installment'] : 0;
         $currency        = 'TL';
-        $test_mode       = $this->testMode ? '1' : '0';
+        // force_test_mode parametresi varsa test modunu zorla
+        $test_mode       = !empty($data['force_test_mode']) ? '1' : ($this->testMode ? '1' : '0');
 
         $user_name       = !empty($data['user_name']) ? $data['user_name'] : 'Misafir';
         $user_address    = !empty($data['user_address']) ? $data['user_address'] : 'Belirtilmedi';
@@ -143,8 +144,14 @@ class Paytr
         if (empty($response)) {
             return [
                 'status' => 'error',
-                'reason' => 'PayTR API yanıt vermedi. Yanıt: ' . substr($result, 0, 200)
+                'reason' => 'PayTR API yanıt vermedi. Yanıt: ' . substr($result, 0, 200),
+                'debug' => $debugLog
             ];
+        }
+
+        // Hata durumunda debug bilgisini ekle
+        if (isset($response['status']) && $response['status'] != 'success') {
+            $response['debug'] = $debugLog;
         }
 
         return $response;
