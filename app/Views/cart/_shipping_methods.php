@@ -10,9 +10,7 @@ if (!empty($shippingMethods)) {
     }
 }
 if ($hasMethods == false):
-    if (!empty($stateId) && $stateId > 0):?>
-        <p class="msg-no-delivery text-danger"><?= "Bu adrese teslimat yapılmıyor"; ?></p>
-    <?php endif;
+    // Kargo yöntemi yoksa mesaj gösterme, direkt devam et
 else: ?>
     <div class="row">
         <div class="col-12 m-t-60">
@@ -38,7 +36,7 @@ else: ?>
                         <strong><?= esc($shippingMethod->username); ?></strong>
                     </p>
                     <?php if (empty($shippingMethod->methods)): ?>
-                        <p class="text-danger"><?= "Satıcı bu adrese kargo göndermiyor"; ?></p>
+                        <!-- Kargo yöntemi yok -->
                     <?php else:
                         foreach ($shippingMethod->methods as $method):
                             $isSelected = 0;

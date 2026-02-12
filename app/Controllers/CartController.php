@@ -143,9 +143,9 @@ class CartController extends BaseController
         if (empty($data['cartItems'])) {
             return redirect()->to(generateUrl('cart'));
         }
-        //check shipping status
+        //check shipping status - kargo kapalıysa direkt ödeme yöntemine yönlendir
         if ($this->productSettings->marketplace_shipping != 1) {
-            return redirect()->to(generateUrl('cart'));
+            return redirect()->to(generateUrl('cart', 'payment_method'));
         }
         //check guest checkout
         if (empty(authCheck()) && $this->generalSettings->guest_checkout != 1) {
