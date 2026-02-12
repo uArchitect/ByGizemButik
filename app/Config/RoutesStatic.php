@@ -54,6 +54,8 @@ $routes->get('iyzico-payment-post', 'CartController::iyzicoPaymentPost');
 $routes->get('cart/paytabs-payment-post', 'CartController::paytabsPaymentPost');
 $routes->post('midtrans-payment-post', 'CartController::midtransPaymentPost');
 $routes->get('mercado-pago-payment-post', 'CartController::mercadoPagoPaymentPost');
+$routes->get('paytr-payment-post', 'CartController::paytrPaymentPost');
+$routes->post('mds-paytr-notification', 'CartController::paytrNotification');
 $routes->post('cart/coupon-code-post', 'CartController::couponCodePost');
 //order
 $routes->post('submit-refund-request', 'OrderController::submitRefundRequest');

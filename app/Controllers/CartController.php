@@ -800,6 +800,117 @@ class CartController extends BaseController
     }
 
     /**
+     * Payment with PayTR
+     */
+    public function paytrPaymentPost()
+    {
+        $lang = inputGet('lang');
+        $langBaseUrl = langBaseUrl();
+        if ($lang != $this->activeLang->short_form) {
+            $langBaseUrl = base_url() . '/' . $lang;
+        }
+
+        $paytr = getPaymentGateway('paytr');
+        if (empty($paytr)) {
+            setErrorMessage("Payment method not found!");
+            $this->redirectBackToPayment($langBaseUrl);
+        }
+
+        $paymentSession = helperGetSession('mds_payment_cart_data');
+        if (empty($paymentSession) || empty($paymentSession->mds_payment_token) || inputGet('mds_token') != $paymentSession->mds_payment_token) {
+            setErrorMessage(trans("invalid_attempt"));
+            $this->redirectBackToPayment($langBaseUrl);
+        }
+
+        $status = inputGet('status');
+        $merchantOid = inputGet('merchant_oid');
+        $paymentType = inputGet('payment_type');
+        if (empty($paymentType)) {
+            $paymentType = $paymentSession->payment_type ?? 'sale';
+        }
+
+        // PayTR session verilerini kontrol et
+        $paytrData = helperGetSession('mds_paytr_data');
+        if (empty($paytrData) || $paytrData->merchant_oid != $merchantOid) {
+            setErrorMessage(trans("invalid_attempt"));
+            $this->redirectBackToPayment($langBaseUrl);
+        }
+
+        if ($status == 'success') {
+            // Bildirim dosyasını kontrol et (PayTR server-to-server notification)
+            $notificationFile = WRITEPATH . 'paytr/' . $merchantOid . '.json';
+            $maxWait = 15; // Maksimum 15 saniye bekle
+            $waited = 0;
+
+            while (!file_exists($notificationFile) && $waited < $maxWait) {
+                sleep(1);
+                $waited++;
+            }
+
+            if (file_exists($notificationFile)) {
+                $notificationData = json_decode(file_get_contents($notificationFile), true);
+
+                if (!empty($notificationData) && $notificationData['status'] == 'success') {
+                    $dataTransaction = [
+                        'payment_method' => 'PayTR',
+                        'payment_id' => $merchantOid,
+                        'currency' => 'TRY',
+                        'payment_amount' => $paymentSession->total_amount,
+                        'payment_status' => 'Succeeded'
+                    ];
+
+                    // Siparişi işle
+                    $response = $this->executePayment($dataTransaction, $paymentType, $langBaseUrl);
+
+                    if ($response->result == 1) {
+                        setSuccessMessage($response->message);
+                    } else {
+                        setErrorMessage($response->message);
+                    }
+
+                    // Temizlik
+                    @unlink($notificationFile);
+                    helperDeleteSession('mds_paytr_data');
+
+                    return redirect()->to($response->redirectUrl);
+                } else {
+                    $failReason = !empty($notificationData['failed_reason_msg']) ? $notificationData['failed_reason_msg'] : trans("msg_error");
+                    setErrorMessage($failReason);
+                    @unlink($notificationFile);
+                    helperDeleteSession('mds_paytr_data');
+                    $this->redirectBackToPayment($langBaseUrl);
+                }
+            } else {
+                // Bildirim gelmedi ama kullanıcı başarılı URL'ye yönlendirildi
+                // Ödemeyi başarılı kabul et
+                $dataTransaction = [
+                    'payment_method' => 'PayTR',
+                    'payment_id' => $merchantOid,
+                    'currency' => 'TRY',
+                    'payment_amount' => $paymentSession->total_amount,
+                    'payment_status' => 'Succeeded'
+                ];
+
+                $response = $this->executePayment($dataTransaction, $paymentType, $langBaseUrl);
+
+                if ($response->result == 1) {
+                    setSuccessMessage($response->message);
+                } else {
+                    setErrorMessage($response->message);
+                }
+
+                helperDeleteSession('mds_paytr_data');
+                return redirect()->to($response->redirectUrl);
+            }
+        } else {
+            // Başarısız ödeme
+            helperDeleteSession('mds_paytr_data');
+            setErrorMessage(trans("msg_error"));
+            $this->redirectBackToPayment($langBaseUrl);
+        }
+    }
+
+    /**
      * Payment with Midtrans
      */
     public function midtransPaymentPost()

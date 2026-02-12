@@ -396,6 +396,60 @@ $stripeLocales = ['auto' => 'Auto', 'ar' => 'Arabic', 'bg' => 'Bulgarian (Bulgar
                             endif; ?>
                         </div>
 
+                        <div class="tab-pane<?= $activeTab == 'paytr' ? ' active' : ''; ?>">
+                            <?php if ($activeTab == 'paytr'):
+                                $paytr = getPaymentGateway('paytr');
+                                if (!empty($paytr)):?>
+                                    <input type="hidden" name="name_key" value="paytr">
+                                    <div class="form-group">
+                                        <label>Durum</label>
+                                        <?= formRadio('status', 1, 0, "Etkin", "Devre Dışı", $paytr->status, 'col-md-4'); ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mod</label>
+                                        <?= formRadio('environment', 'production', 'sandbox', "Üretim", "Test", $paytr->environment, 'col-md-4'); ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mağaza No (Merchant ID)</label>
+                                        <input type="text" class="form-control" name="public_key" placeholder="Mağaza No" value="<?= esc($paytr->public_key); ?>">
+                                        <small class="text-muted">PayTR Mağaza Paneli > Entegrasyon Bilgileri'nden alınır</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mağaza Parola (Merchant Key)</label>
+                                        <input type="text" class="form-control" name="secret_key" placeholder="Mağaza Parola" value="<?= esc($paytr->secret_key); ?>">
+                                        <small class="text-muted">PayTR Mağaza Paneli > Entegrasyon Bilgileri'nden alınır</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Mağaza Gizli Anahtar (Merchant Salt)</label>
+                                        <input type="text" class="form-control" name="merchant_salt" placeholder="Mağaza Gizli Anahtar" value="<?= esc($paytr->merchant_salt ?? ''); ?>">
+                                        <small class="text-muted">PayTR Mağaza Paneli > Entegrasyon Bilgileri'nden alınır</small>
+                                    </div>
+                                    <?php if (!empty($currencies)): ?>
+                                        <div class="form-group">
+                                            <label class="control-label"><?= "Ana Para Birimi"; ?></label>
+                                            <select name="base_currency" class="form-control">
+                                                <?php foreach ($currencies as $currency):
+                                                    if ($currency->code == 'TRY'):?>
+                                                        <option value="<?= $currency->code; ?>" <?= $paytr->base_currency == $currency->code ? 'selected' : ''; ?>><?= $currency->code; ?>&nbsp;(<?= $currency->name; ?>)</option>
+                                                    <?php endif;
+                                                endforeach; ?>
+                                            </select>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="form-group max-400">
+                                        <label><?= "İşlem Ücreti"; ?>&nbsp;(%)</label>
+                                        <input type="number" name="transaction_fee" class="form-control" min="0" max="100" step="0.01" value="<?= $paytr->transaction_fee; ?>" placeholder="0.00">
+                                        <small>* <?= "Bu ücret her işlemde alınacak komisyon oranıdır"; ?></small>
+                                    </div>
+                                    <div class="alert alert-info alert-large">
+                                        <strong>Uyarı!</strong>&nbsp;&nbsp;PayTR iFrame API kullanılmaktadır. Bildirim URL'sini PayTR Mağaza Panelinde ayarlamanız gerekir:
+                                        <br><strong>Bildirim URL:</strong> <code><?= base_url('/mds-paytr-notification'); ?></code>
+                                        <br><br><a href="https://dev.paytr.com" target="_blank" style="color: #0c5460;font-weight: bold">PayTR Geliştirici Dokümantasyonu</a>
+                                    </div>
+                                <?php endif;
+                            endif; ?>
+                        </div>
+
                         <div class="tab-pane<?= $activeTab == 'bank_transfer' ? ' active' : ''; ?>">
                             <?php if ($activeTab == 'bank_transfer'): ?>
                                 <input type="hidden" name="name_key" value="bank_transfer">

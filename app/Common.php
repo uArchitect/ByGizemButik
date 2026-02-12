@@ -1806,6 +1806,53 @@ if (strpos($_SERVER['REQUEST_URI'], '/cart/paytabs-payment-callback') !== false)
     exit();
 }
 
+if (strpos($_SERVER['REQUEST_URI'], '/mds-paytr-notification') !== false) {
+    // PayTR bildirim (notification) - server-to-server POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['merchant_oid'])) {
+        $merchantOid = $_POST['merchant_oid'];
+        $status = isset($_POST['status']) ? $_POST['status'] : '';
+        $totalAmount = isset($_POST['total_amount']) ? $_POST['total_amount'] : '';
+        $hash = isset($_POST['hash']) ? $_POST['hash'] : '';
+        $failedReasonMsg = isset($_POST['failed_reason_msg']) ? $_POST['failed_reason_msg'] : '';
+
+        // PayTR bilgilerini veritabanından al
+        $db = \Config\Database::connect();
+        $paytr = $db->table('payment_gateways')->where('name_key', 'paytr')->get()->getRow();
+
+        if (!empty($paytr) && !empty($paytr->secret_key) && !empty($paytr->merchant_salt)) {
+            // Hash doğrulama
+            $calculatedHash = base64_encode(hash_hmac('sha256',
+                $merchantOid . $paytr->merchant_salt . $status . $totalAmount,
+                $paytr->secret_key,
+                true
+            ));
+
+            if ($calculatedHash == $hash) {
+                // Bildirim verilerini kaydet
+                $paytrDir = WRITEPATH . 'paytr';
+                if (!is_dir($paytrDir)) {
+                    mkdir($paytrDir, 0755, true);
+                }
+
+                $notificationData = [
+                    'merchant_oid' => $merchantOid,
+                    'status' => $status,
+                    'total_amount' => $totalAmount,
+                    'failed_reason_msg' => $failedReasonMsg,
+                    'timestamp' => date('Y-m-d H:i:s')
+                ];
+
+                file_put_contents($paytrDir . '/' . $merchantOid . '.json', json_encode($notificationData));
+
+                echo 'OK';
+                exit();
+            }
+        }
+    }
+    echo 'OK';
+    exit();
+}
+
 if (strpos($_SERVER['REQUEST_URI'], '/mds-iyzico-payment-callback') !== false) {
     $token = $_POST['token'];
     $urlArray = parse_url($_SERVER['REQUEST_URI'] ?? '');

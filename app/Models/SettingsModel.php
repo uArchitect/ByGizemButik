@@ -563,6 +563,10 @@ class SettingsModel extends BaseModel
                     'status' => !empty(inputPost('status')) ? 1 : 0,
                     'transaction_fee' => inputPost('transaction_fee')
                 ];
+                // PayTR için merchant_salt alanı
+                if ($nameKey == 'paytr' && inputPost('merchant_salt') !== null) {
+                    $data['merchant_salt'] = inputPost('merchant_salt');
+                }
                 $paymentSettings = $this->getPaymentSettings();
                 if (!empty($paymentSettings) && $paymentSettings->currency_converter == 1) {
                     $data['base_currency'] = inputPost('base_currency');
