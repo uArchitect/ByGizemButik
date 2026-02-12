@@ -21,7 +21,7 @@ class Paytr
         if (!empty($paytrGateway)) {
             $this->merchantId = $paytrGateway->public_key;
             $this->merchantKey = $paytrGateway->secret_key;
-            $this->merchantSalt = $paytrGateway->merchant_salt;
+            $this->merchantSalt = !empty($paytrGateway->merchant_salt) ? $paytrGateway->merchant_salt : '';
             $this->testMode = ($paytrGateway->environment == 'sandbox');
         }
     }
@@ -35,6 +35,14 @@ class Paytr
      */
     public function createToken($data)
     {
+        // Gerekli bilgilerin kontrolü
+        if (empty($this->merchantId) || empty($this->merchantKey) || empty($this->merchantSalt)) {
+            return [
+                'status' => 'error',
+                'reason' => 'PayTR bilgileri eksik! Lütfen admin panelinden PayTR ayarlarını kontrol edin.'
+            ];
+        }
+
         $merchantOid = $data['merchant_oid'];
         $email = $data['email'];
         $paymentAmount = intval(round($data['amount'] * 100));
@@ -109,8 +117,17 @@ class Paytr
         if (empty($response)) {
             return [
                 'status' => 'error',
-                'reason' => 'PayTR API yanıt vermedi'
+                'reason' => 'PayTR API yanıt vermedi. Yanıt: ' . substr($result, 0, 200)
             ];
+        }
+
+        // PayTR hata mesajlarını daha anlaşılır hale getir
+        if (isset($response['status']) && $response['status'] == 'failed') {
+            $reason = !empty($response['reason']) ? $response['reason'] : 'Bilinmeyen hata';
+            if (strpos($reason, 'Geçersiz istek') !== false || strpos($reason, 'mağaza aktif değil') !== false) {
+                $reason .= ' - Lütfen PayTR mağaza panelinden hesabınızın aktif olduğundan ve entegrasyon bilgilerinin doğru olduğundan emin olun.';
+            }
+            $response['reason'] = $reason;
         }
 
         return $response;

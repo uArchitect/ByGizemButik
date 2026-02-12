@@ -93,11 +93,30 @@
         </div>
     <?php else:
         $errorMessage = !empty($tokenResponse['reason']) ? $tokenResponse['reason'] : 'PayTR token oluşturulamadı!';
+        // Debug bilgisi ekle (sadece geliştirme için)
+        if (empty($paymentGateway->merchant_salt)) {
+            $errorMessage .= ' [HATA: merchant_salt boş!]';
+        }
+        if (empty($paymentGateway->public_key)) {
+            $errorMessage .= ' [HATA: public_key boş!]';
+        }
+        if (empty($paymentGateway->secret_key)) {
+            $errorMessage .= ' [HATA: secret_key boş!]';
+        }
         setErrorMessage($errorMessage);
         ?>
         <div class="row">
             <div class="col-12">
                 <?= view('partials/_messages'); ?>
+                <div class="alert alert-warning">
+                    <strong>PayTR Entegrasyon Hatası</strong><br>
+                    <?= esc($errorMessage); ?><br><br>
+                    <small>Lütfen admin panelinden PayTR ayarlarını kontrol edin:<br>
+                    - Mağaza No (Merchant ID): <?= !empty($paymentGateway->public_key) ? '✓ Dolu' : '✗ Boş'; ?><br>
+                    - Mağaza Parola (Merchant Key): <?= !empty($paymentGateway->secret_key) ? '✓ Dolu' : '✗ Boş'; ?><br>
+                    - Mağaza Gizli Anahtar (Merchant Salt): <?= !empty($paymentGateway->merchant_salt) ? '✓ Dolu' : '✗ Boş'; ?><br>
+                    - Mod: <?= esc($paymentGateway->environment ?? 'Belirtilmemiş'); ?></small>
+                </div>
             </div>
         </div>
     <?php endif;
