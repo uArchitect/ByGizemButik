@@ -1828,7 +1828,7 @@ if (strpos($_SERVER['REQUEST_URI'], '/mds-paytr-notification') !== false) {
             ));
 
             if ($calculatedHash == $hash) {
-                // Bildirim verilerini kaydet
+                // Bildirim veriler222ini kaydet
                 $paytrDir = WRITEPATH . 'paytr';
                 if (!is_dir($paytrDir)) {
                     mkdir($paytrDir, 0755, true);
